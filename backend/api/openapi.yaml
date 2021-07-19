@@ -29,6 +29,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+  /users:
+    get:
+      description: Test
+      responses:
+        200:
+          description: Good
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestResponse'
 
 components:
   schemas:
@@ -48,4 +58,9 @@ components:
         - message
       properties:
         message:
+          type: string
+    
+    TestResponse:
+      properties:
+        test:
           type: string
