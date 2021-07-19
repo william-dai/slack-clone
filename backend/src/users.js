@@ -1,20 +1,10 @@
-const {Pool} = require('pg');
+const db = require('./database/userDatabase.js');
 
-const pool = new Pool({
-  host: 'localhost',
-  port: 5432,
-  database: process.env.POSTGRES_DB,
-  user: process.env.POSTGRES_USER,
-  password: process.env.POSTGRES_PASSWORD,
-});
-
- exports.getTest = async () => {
-  const select = 'SELECT * FROM users';
-  const query = {
-    text: select,
-    values: [],
-  };
-  const {rows} = await pool.query(query);
-  // return rows[0].created;
-  console.log(rows);
+exports.getUsers = async(req, res) => {
+    const users = await db.getUsers(req.query.username);
+    if (users.length !== 0) {
+        res.status(200).json(users);
+    } else {
+        res.status(404).send();
+    }
 };
