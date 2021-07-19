@@ -29,7 +29,7 @@ app.use(
 
 app.get('/v0/dummy', dummy.get);
 // Your routes go here
-app.get('/v0/users/', users.getTest);
+app.get('/v0/users/', users.getUsers);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

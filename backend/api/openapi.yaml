@@ -32,13 +32,21 @@ paths:
   /users:
     get:
       description: Test
+      parameters:
+      - name: username
+        in: query
+        description: User to Get
+        schema:
+          type: string
       responses:
         200:
           description: Good
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TestResponse'
+                $ref: '#/components/schemas/UserResponse'
+        404:
+          description: User Not Found
 
 components:
   schemas:
@@ -60,7 +68,22 @@ components:
         message:
           type: string
     
-    TestResponse:
+    UserResponse:
+      type: array
       properties:
-        test:
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+          
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        pass:
+          type: string
+        workspace:
+          type: string
+        status:
           type: string
