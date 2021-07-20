@@ -97,6 +97,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    post:
+      description: Create New Channel
+      parameters:
+      - name: channel
+        in: query
+        description: Mailbox to Make
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Created New Channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+        400:
+          description: Could Not Create New Channel
 
 components:
   schemas:

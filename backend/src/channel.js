@@ -8,3 +8,13 @@ exports.getChannels = async(req, res) => {
     res.status(404).send();
   }
 };
+
+exports.createChannel = async(req, res) => {
+  const name = req.query.channel;
+  const created = await db.createChannel(name);
+  if (created) {
+    res.status(200).json(created);
+  } else {
+    res.status(400).send();
+  }
+};

@@ -34,6 +34,7 @@ app.get('/v0/dummy', dummy.get);
 app.get('/v0/users/', users.getUsers);
 app.get('/v0/workspace/', workspace.getWorkspace);
 app.get('/v0/channel/', channel.getChannels);
+app.post('/v0/channel/', channel.createChannel);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
