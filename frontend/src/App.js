@@ -1,12 +1,16 @@
 import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
+import Login from './Login';
+/*
 import Emoji from './Emoji';
-
+*/
+/*
 /**
  * Simple component with no state.
  *
  * @param {function} setDummy set the dummy state
- */
+ *//*
 function getDummy(setDummy) {
   fetch('http://localhost:3010/v0/dummy')
     .then((response) => {
@@ -27,7 +31,7 @@ function getDummy(setDummy) {
  * Simple component with no state.
  *
  * @return {object} JSX
- */
+ */ /*
 function App() {
   const [dummy, setDummy] = React.useState('Click the button!');
   const [emoji, setEmoji] = React.useState(false);
@@ -57,6 +61,24 @@ function App() {
         <Emoji/>
       </div>
     </div>
+  );
+}
+*/
+
+/**
+ * Simple component with no state.
+ *
+ * @return {object} JSX
+ */
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact>
+          <Login/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
