@@ -10,6 +10,7 @@ const dummy = require('./dummy');
 const users = require('./users.js');
 const workspace = require('./workspace.js');
 const channel = require('./channel.js');
+const message = require('./message.js');
 
 const app = express();
 app.use(cors());
@@ -36,6 +37,7 @@ app.get('/v0/workspace/', workspace.getWorkspace);
 app.post('/v0/workspace/', workspace.createWorkspace);
 app.get('/v0/channel/', channel.getChannels);
 app.post('/v0/channel/', channel.createChannel);
+app.get('/v0/message', message.getMessages);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
