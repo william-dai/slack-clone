@@ -13,7 +13,8 @@ exports.createChannel = async(req, res) => {
   const name = req.query.channel;
   const workspace = req.query.workspace;
   const created = await db.createChannel(name, workspace);
-  if (created) {
+  console.log(created);
+  if (created.rowCount !== 0) {
     res.status(200).json(created);
   } else {
     res.status(400).send();

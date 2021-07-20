@@ -11,7 +11,7 @@ exports.getWorkspace = async(req, res) => {
 
 exports.createWorkspace = async(req, res) => {
   const workspace = await db.createWorkspace(req.query.workspace, req.query.groups);
-  if (workspace.length !== 0) {
+  if (workspace.rowCount !== 0) {
     res.status(200).json(workspace);
   } else {
     res.status(400).send();
