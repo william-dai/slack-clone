@@ -7,10 +7,10 @@ CREATE TABLE dummy(created TIMESTAMP WITH TIME ZONE);
 CREATE TABLE users(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), name VARCHAR(32), pass VARCHAR(32), workspace VARCHAR(32), status VARCHAR(32));
 
 -- DROP TABLE IF EXISTS workspace;
-CREATE TABLE workspace(name VARCHAR(32), users TEXT []);
+CREATE TABLE workspace(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), name VARCHAR(32), users TEXT []);
 
 -- DROP TABLE IF EXISTS channel;
-CREATE TABLE channel(name VARCHAR(32), users jsonb);
+CREATE TABLE channel(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), workspaceid UUID, name VARCHAR(32), users TEXT []);
 
 -- DROP TABLE IF EXISTS message;
-CREATE TABLE message(createdby jsonb, createdtime TIMESTAMP, content VARCHAR(1000), replies jsonb, reactions VARCHAR(32));
+CREATE TABLE message(id UUID, createdby jsonb, createdtime TIMESTAMP, content VARCHAR(1000), replies jsonb, reactions VARCHAR(32));

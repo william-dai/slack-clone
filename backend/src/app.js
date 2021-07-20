@@ -9,6 +9,7 @@ const OpenApiValidator = require('express-openapi-validator');
 const dummy = require('./dummy');
 const users = require('./users.js');
 const workspace = require('./workspace.js');
+const channel = require('./channel.js');
 
 const app = express();
 app.use(cors());
@@ -32,6 +33,7 @@ app.get('/v0/dummy', dummy.get);
 // Your routes go here
 app.get('/v0/users/', users.getUsers);
 app.get('/v0/workspace/', workspace.getWorkspace);
+app.get('/v0/channel/', channel.getChannels);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
