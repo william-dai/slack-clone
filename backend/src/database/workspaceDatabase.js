@@ -26,7 +26,6 @@ exports.getWorkspace = async (givenName) => {
 };
 
 exports.createWorkspace = async (givenName, givenGroup) => {
-  console.log(givenGroup);
   let select = `INSERT INTO workspace (name, users) VALUES ($1, $2)`;
   let query = {
     text: select,
