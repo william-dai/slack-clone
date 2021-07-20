@@ -18,11 +18,11 @@ exports.getChannels = async () => {
   return rows;
 };
 
-exports.createChannel = async (name) => {
-  const select = `INSERT INTO channel (workspaceid, name, users) SELECT id, $1, ARRAY ['Michael', 'Nathan'] FROM workspace`;
+exports.createChannel = async (name, workspace) => {
+  const select = `INSERT INTO channel (workspaceid, name, users) SELECT id, $1, ARRAY ['Michael', 'Nathan'] FROM workspace WHERE id = $2`;
   const query = {
     text: select,
-    values: [name],
+    values: [name, workspace],
   };
   const channel = await pool.query(query);
   return channel;

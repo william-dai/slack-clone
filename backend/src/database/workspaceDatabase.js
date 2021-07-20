@@ -24,3 +24,14 @@ exports.getWorkspace = async (givenName) => {
   const {rows} = await pool.query(query);
   return rows;
 };
+
+exports.createWorkspace = async (givenName, givenGroup) => {
+  console.log(givenGroup);
+  let select = `INSERT INTO workspace (name, users) VALUES ($1, $2)`;
+  let query = {
+    text: select,
+    values: [givenName, [givenGroup]]
+  };
+  const workspace = await pool.query(query);
+  return workspace;
+};

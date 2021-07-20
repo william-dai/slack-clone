@@ -11,7 +11,8 @@ exports.getChannels = async(req, res) => {
 
 exports.createChannel = async(req, res) => {
   const name = req.query.channel;
-  const created = await db.createChannel(name);
+  const workspace = req.query.workspace;
+  const created = await db.createChannel(name, workspace);
   if (created) {
     res.status(200).json(created);
   } else {

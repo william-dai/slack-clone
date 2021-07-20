@@ -78,6 +78,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    post:
+      description: Create New Workspace
+      parameters:
+      - name: workspace
+        in: query
+        description: Workspace to Make
+        required: true
+        schema:
+          type: string
+      - name: groups
+        in: query
+        description: Workspace Allowed Groups
+        required: true
+        schema:
+          type: array
+      responses:
+        200:
+          description: Created New Workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        400:
+          description: Could Not Create New Workspace
 
   /channel:
     get:
@@ -103,6 +127,12 @@ paths:
       - name: channel
         in: query
         description: Mailbox to Make
+        required: true
+        schema:
+          type: string
+      - name: workspace
+        in: query
+        description: Workspace Channel is Under
         required: true
         schema:
           type: string
@@ -167,6 +197,8 @@ components:
     Workspace:
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string
         users:
