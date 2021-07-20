@@ -18,7 +18,28 @@ function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    /* authentication goes here */
+    fetch('/authenticate', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        alert('test1');
+        return res.json();
+      })
+      .then((json) => {
+        localStorage.setItem('user', JSON.stringify(json));
+        alert('test');
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('Failed to authenticate user. Please try again.');
+      });
   };
 
   return (

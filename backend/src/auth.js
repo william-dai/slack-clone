@@ -13,9 +13,9 @@ const pool = new Pool({
 
 exports.authenticate = async (req, res) => {
   const {email, password} = req.body;
-
+  console.log('testing');
   const query = {
-    text: `SELECT * FROM users WHERE LOWER(username) = $1 AND pass = $2`,
+    text: `SELECT * FROM users WHERE LOWER(username) = LOWER($1) AND pass = $2`,
     values: [email, password],
   }
   const {rows} = await pool.query(query);
@@ -24,5 +24,4 @@ exports.authenticate = async (req, res) => {
   } else {
     res.status(401).send('Failed to authenticate user.');
   }
-}
-
+};

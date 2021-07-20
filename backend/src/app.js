@@ -28,6 +28,9 @@ app.use(
     }),
 );
 
+const auth = require('./auth');
+app.post('/authenticate',  auth.authenticate);
+
 app.get('/v0/dummy', dummy.get);
 // Your routes go here
 app.get('/v0/users/', users.getUsers);
