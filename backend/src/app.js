@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const OpenApiValidator = require('express-openapi-validator');
 
+const auth = require('./auth');
 const dummy = require('./dummy');
 const users = require('./users.js');
 const workspace = require('./workspace.js');
@@ -32,6 +33,7 @@ app.use(
 
 app.get('/v0/dummy', dummy.get);
 // Your routes go here
+app.post('/v0/authenticate',  auth.authenticate);
 app.get('/v0/users/', users.getUsers);
 app.get('/v0/workspace/', workspace.getWorkspace);
 app.post('/v0/workspace/', workspace.createWorkspace);

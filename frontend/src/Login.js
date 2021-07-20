@@ -1,24 +1,47 @@
 import React from 'react';
-/* import {useHistory} from "react-router-dom"; */
+import {useHistory} from 'react-router-dom';
 
 /**
  *
  * @return {object}
  */
 function Login() {
-  const [user, setUser] = React.useState({email: '', password: ''});
-  /* const history = useHistory(); */
+  const [user, setUser] = React.useState({email: '', pass: ''});
+  const history = useHistory();
 
   const handleInputChange = (event) => {
     const {value, name} = event.target;
     const currUser = user;
     currUser[name] = value;
     setUser(currUser);
+    console.log(user);
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    /* authentication goes here */
+    console.log(JSON.stringify(user));
+    fetch('/authenticate', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        console.log('test');
+        localStorage.setItem('user', JSON.stringify(json));
+        history.push('/test');
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Error logging in, please try again');
+      });
   };
 
   return (
@@ -27,7 +50,7 @@ function Login() {
       <input type="email" name="email" placeholder="name@work-email.com"
         onChange={handleInputChange} required />
       <br />
-      <input type="password" name="password" placeholder="Password"
+      <input type="pass" name="pass" placeholder="Password"
         onChange={handleInputChange} required />
       <br /><br />
       <input type ="submit" value="submit" />

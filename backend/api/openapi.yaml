@@ -13,6 +13,38 @@ servers:
   - url: http://localhost:3010/v0
 
 paths:
+  /authenticate:
+    post:
+      description: test
+      requestBody:
+        description: test2
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                pass:
+                  type: string
+      responses:
+        200:
+          description: Application response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: Failed authentication
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /dummy:
     get:
       description: Dummy Endpoint
@@ -179,6 +211,9 @@ components:
       properties:
         name:
           type: string
+        email:
+          type: string
+          format: email
         pass:
           type: string
         workspace:
