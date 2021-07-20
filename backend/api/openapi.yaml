@@ -110,6 +110,73 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+    post:
+      description: Create New Workspace
+      parameters:
+      - name: workspace
+        in: query
+        description: Workspace to Make
+        required: true
+        schema:
+          type: string
+      - name: groups
+        in: query
+        description: Workspace Allowed Groups
+        required: true
+        schema:
+          type: array
+      responses:
+        200:
+          description: Created New Workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        400:
+          description: Could Not Create New Workspace
+
+  /channel:
+    get:
+      description: Getting Channel
+      responses:
+        200:
+          description: Received Channels
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelResponse'
+        404:
+          description: Channels Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: Create New Channel
+      parameters:
+      - name: channel
+        in: query
+        description: Mailbox to Make
+        required: true
+        schema:
+          type: string
+      - name: workspace
+        in: query
+        description: Workspace Channel is Under
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Created New Channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+        400:
+          description: Could Not Create New Channel
 
 components:
   schemas:
@@ -165,6 +232,28 @@ components:
     Workspace:
       type: object
       properties:
+        id:
+          type: string
+        name:
+          type: string
+        users:
+          type: array
+
+    ChannelResponse:
+      type: array
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Channel'
+
+    Channel:
+      type: object
+      properties:
+        id:
+          type: string
+        workspaceid:
+          type: string
         name:
           type: string
         users:
