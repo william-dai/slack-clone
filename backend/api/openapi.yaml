@@ -31,7 +31,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   /users:
     get:
-      description: Test
+      description: Getting Users
       parameters:
       - name: username
         in: query
@@ -40,13 +40,44 @@ paths:
           type: string
       responses:
         200:
-          description: Good
+          description: Received Users
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponse'
         404:
           description: User Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+  /workspace:
+    get:
+      description: Getting Workspace
+      parameters:
+      - name: workspace
+        in: query
+        description: Workspace to Get
+        schema:
+          type: string
+      responses:
+        200:
+          description: Received Workspaces
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceResponse'
+        404:
+          description: Workspaces Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
   schemas:
@@ -87,3 +118,19 @@ components:
           type: string
         status:
           type: string
+      
+    WorkspaceResponse:
+      type: array
+      properties:
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+
+    Workspace:
+      type: object
+      properties:
+        name:
+          type: string
+        users:
+          type: array
