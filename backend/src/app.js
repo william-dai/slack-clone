@@ -29,7 +29,7 @@ app.use(
 );
 
 const auth = require('./auth');
-app.post('/authenticate',  auth.authenticate);
+app.post('/v0/authenticate',  auth.authenticate);
 
 app.get('/v0/dummy', dummy.get);
 // Your routes go here

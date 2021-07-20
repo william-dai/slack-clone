@@ -6,7 +6,7 @@ import React from 'react';
  * @return {object}
  */
 function Login() {
-  const [user, setUser] = React.useState({email: '', password: ''});
+  const [user, setUser] = React.useState({email: '', pass: ''});
   /* const history = useHistory(); */
 
   const handleInputChange = (event) => {
@@ -14,6 +14,7 @@ function Login() {
     const currUser = user;
     currUser[name] = value;
     setUser(currUser);
+    console.log(user);
   };
 
   const onSubmit = (event) => {
@@ -38,6 +39,7 @@ function Login() {
       })
       .catch((error) => {
         console.log(error);
+        console.log('test2');
         alert('Failed to authenticate user. Please try again.');
       });
   };
@@ -48,7 +50,7 @@ function Login() {
       <input type="email" name="email" placeholder="name@work-email.com"
         onChange={handleInputChange} required />
       <br />
-      <input type="password" name="password" placeholder="Password"
+      <input type="pass" name="pass" placeholder="Password"
         onChange={handleInputChange} required />
       <br /><br />
       <input type ="submit" value="submit" />
