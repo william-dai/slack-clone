@@ -35,11 +35,11 @@ app.use(
 
 app.get('/v0/dummy', dummy.get);
 // Your routes go here
-app.get('/v0/users/', users.getUsers);
-app.get('/v0/workspace/', workspace.getWorkspace);
-app.get('/v0/channel/', channel.getChannels);
-app.get('/v0/message', message.getMessages);
-app.post('/v0/message', message.createMessage);
+app.get('/v0/users/', auth.check, users.getUsers);
+app.get('/v0/workspace/', auth.check, workspace.getWorkspace);
+app.get('/v0/channel/', auth.check, channel.getChannels);
+app.get('/v0/message', auth.check, message.getMessages);
+app.post('/v0/message', auth.check, message.createMessage);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({
