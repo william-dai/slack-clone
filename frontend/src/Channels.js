@@ -40,18 +40,21 @@ function fetchChannels(setChannels) {
  *
  * @param {*} setMessages
  * @param {*} id
- */
-function fetchMessages(setMessages, id) {
-  /* const item = localStorage.getItem('user');
+ */ /*
+function fetchMessages(setMessages) {
+  const item = localStorage.getItem('user');
   if (!item) {
     return;
-  } */
-  console.log('test ' + id);
-  fetch('/v0/message/' + id, {
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  console.log('test ');
+  fetch('/v0/message/ec05be41-aa54-4e70-bba0-528cc3689823', {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }),
   })
     .then((res) => {
       if (!res.ok) {
@@ -65,9 +68,9 @@ function fetchMessages(setMessages, id) {
     })
     .catch((error) => {
       console.log(error);
-      setMessages([]);
+      setMessages({});
     });
-}
+} */
 
 /**
  *
@@ -79,23 +82,8 @@ function Channels() {
   // const [name, setName] = React.useState(user ? user.name : '');
   // const [error, setError] = React.useState('Logged out');
   const history = useHistory();
-  let [messageDisplay, setMessageDisplay] = React.useState(false);
-  const [messages, setMessages] = React.useState([]);
-
-  /* const logout = () => {
-    localStorage.removeItem('user');
-    setChannels([]);
-    setName('');
-    setError('Logged Out');
-    history.push('/');
-  } */
-
-  const handleChannelChange = (event) => {
-    console.log(event.currentTarget.id);
-    setMessageDisplay(messageDisplay = true);
-    console.log(messageDisplay);
-    fetchMessages(setMessages, event.currentTarget.id);
-  };
+  // let [messageDisplay, setMessageDisplay] = React.useState(false);
+  // const [messages, setMessages] = React.useState({});
 
   React.useEffect(() => {
     fetchChannels(setChannels /* , setError */);
@@ -110,7 +98,8 @@ function Channels() {
             return (
               <table key={channel.name}><tbody><tr><td><button
                 id={channel.id}
-                onClick={handleChannelChange}>#{channel.name}
+                onClick={() =>
+                  history.push('/channels/' + channel.id)}>#{channel.name}
               </button></td></tr></tbody></table>
             );
           }
@@ -130,14 +119,6 @@ function Channels() {
       <div id='channels'>
       </div>
       <button onClick={() => history.push('/channels')}>Home</button>
-      <h2>Placeholder Messages</h2>
-      <div open={messageDisplay}>
-        <div id='messages'>
-          {messages.map((message) => (
-            <tbody><tr><td>{message}</td></tr></tbody>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };
