@@ -110,30 +110,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    post:
-      description: Create New Workspace
-      parameters:
-      - name: workspace
-        in: query
-        description: Workspace to Make
-        required: true
-        schema:
-          type: string
-      - name: groups
-        in: query
-        description: Workspace Allowed Groups
-        required: true
-        schema:
-          type: array
-      responses:
-        200:
-          description: Created New Workspace
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Workspace'
-        400:
-          description: Could Not Create New Workspace
 
   /channel:
     get:
@@ -153,30 +129,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
+  /message:
+    get:
+      description: Getting Message/s
+      responses:
+        200:
+          description: Received Message/s
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        404:
+          description: Message/s Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     post:
-      description: Create New Channel
+      description: Create New Message
       parameters:
-      - name: channel
+      - name: message
         in: query
-        description: Mailbox to Make
+        description: Message to Post
         required: true
         schema:
           type: string
-      - name: workspace
+      - name: channel
         in: query
-        description: Workspace Channel is Under
+        description: Channel Message is Under
+        required: true
+        schema:
+          type: string
+      - name: user
+        in: query
+        description: User Who Posted Message
         required: true
         schema:
           type: string
       responses:
         200:
-          description: Created New Channel
+          description: Created New Message
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Channel'
+                $ref: '#/components/schemas/Message'
         400:
-          description: Could Not Create New Channel
+          description: Could Not Create New Message
 
 components:
   schemas:
@@ -258,3 +259,27 @@ components:
           type: string
         users:
           type: array
+
+    MessageResponse:
+      type: array
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+        createdby:
+          type: string
+        createdtime:
+          type: string
+        content:
+          type: string
+        replies:
+          type: string
+        reactions:
+          type: string

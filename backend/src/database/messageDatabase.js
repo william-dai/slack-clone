@@ -18,13 +18,12 @@ exports.getMessages = async () => {
   return rows;
 };
 
-// exports.createWorkspace = async (givenName, givenGroup) => {
-//   console.log(givenGroup);
-//   let select = `INSERT INTO workspace (name, users) VALUES ($1, $2)`;
-//   let query = {
-//     text: select,
-//     values: [givenName, [givenGroup]]
-//   };
-//   const workspace = await pool.query(query);
-//   return workspace;
-// };
+exports.createMessage = async (givenContent, givenChannel, givenUser) => {
+  let select = `INSERT INTO message (createdby, createdtime, content, replies, reactions) SELECT name, current_timestamp, $1, '{"Replies": "Okay, here we go..."}', 'Laugh' FROM users WHERE LOWER(name) = LOWER($2);`
+  let query = {
+    text: select,
+    values: [givenContent, givenUser]
+  };
+  const message = await pool.query(query);
+  return message;
+};
