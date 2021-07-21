@@ -34,13 +34,12 @@ function Login() {
         return res.json();
       })
       .then((json) => {
-        console.log('test');
         localStorage.setItem('user', JSON.stringify(json));
-        history.push('/test');
+        history.push('/channels');
       })
       .catch((err) => {
         console.log(err);
-        alert('Error logging in, please try again');
+        alert('Failed to authenticate the user. Please try again.');
       });
   };
 
