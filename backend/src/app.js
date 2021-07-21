@@ -40,6 +40,7 @@ app.get('/v0/workspace/', workspace.getWorkspace);
 app.get('/v0/channel/', channel.getChannels);
 app.get('/v0/message', message.getMessages);
 app.post('/v0/message', message.createMessage);
+app.get('/v0/message/:id', message.getMessagesByChannel);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

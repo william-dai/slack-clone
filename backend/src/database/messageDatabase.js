@@ -18,14 +18,15 @@ exports.getMessages = async () => {
   return rows;
 };
 
-exports.getMessagesByChannel = async (givenChannel) => {
+exports.getMessagesByChannel = async (givenChannelId) => {
   let select = 'SELECT * FROM message WHERE channelid = $1';
   let query = {
     text: select,
-    values: [givenChannel],
+    values: [givenChannelId],
   };
   const {rows} = await pool.query(query);
-  return rows;
+  console.log(rows);
+  return rows.length !== 0 ? rows : undefined;
 };
 
 exports.createMessage = async (givenContent, givenChannel, givenUser) => {

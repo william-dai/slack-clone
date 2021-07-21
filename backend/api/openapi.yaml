@@ -13,6 +13,38 @@ servers:
   - url: http://localhost:3010/v0
 
 paths:
+  /authenticate:
+    post:
+      description: test
+      requestBody:
+        description: test2
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                pass:
+                  type: string
+      responses:
+        200:
+          description: Application response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        401:
+          description: Failed authentication
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /dummy:
     get:
       description: Dummy Endpoint
@@ -146,6 +178,32 @@ paths:
                 $ref: '#/components/schemas/Message'
         400:
           description: Could Not Create New Message
+  
+  /message/{id}:
+    get:
+      description: Getting message from specific channel
+      parameters:
+      - name: id
+        in: path
+        description: id of channel
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Received Message/s
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        404:
+          description: Message/s Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
   schemas:

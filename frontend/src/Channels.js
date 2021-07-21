@@ -37,13 +37,14 @@ function fetchChannels(setChannels) {
  *
  * @param {*} setMessages
  * @param {*} id
- */ /*
+ */
 function fetchMessages(setMessages, id) {
-  const item = localStorage.getItem('user');
+  /* const item = localStorage.getItem('user');
   if (!item) {
     return;
-  }
-  fetch('/v0/message', {
+  } */
+  console.log('test ' + id);
+  fetch('/v0/message/' + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ function fetchMessages(setMessages, id) {
       console.log(error);
       setMessages([]);
     });
-} */
+}
 
 /**
  *
@@ -76,7 +77,7 @@ function Channels() {
   // const [error, setError] = React.useState('Logged out');
   const history = useHistory();
   let [messageDisplay, setMessageDisplay] = React.useState(false);
-  const [messages/* , setMessages */] = React.useState([]);
+  const [messages, setMessages] = React.useState([]);
 
   /* const logout = () => {
     localStorage.removeItem('user');
@@ -89,7 +90,8 @@ function Channels() {
   const handleChannelChange = (event) => {
     console.log(event.currentTarget.id);
     setMessageDisplay(messageDisplay = true);
-    // fetchMessages(setMessages, event.currentTarget.id);
+    console.log(messageDisplay);
+    fetchMessages(setMessages, event.currentTarget.id);
   };
 
   React.useEffect(() => {
@@ -104,7 +106,7 @@ function Channels() {
           if (channel.category === 'Channels') {
             return (
               <table key={channel.name}><tbody><tr><td><button
-                id={channel.workspaceid}
+                id={channel.id}
                 onClick={handleChannelChange}>#{channel.name}
               </button></td></tr></tbody></table>
             );
