@@ -8,6 +8,15 @@ import ForumIcon from '@material-ui/icons/Forum';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
 
 /**
  *
@@ -50,12 +59,27 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
     margin: 0,
+    left: 0,
+    top: 0,
   },
   bottomNav: {
     position: 'fixed',
     bottom: '0%',
     margin: 'auto',
     width: '100%',
+  },
+  list: {
+    margin: 0,
+    padding: 0,
+    paddingLeft: 10,
+    fontFamily: '"Comic Sans MS", "Comic Sans", cursive',
+  },
+  menuButton: {
+    right: 0,
+    position: 'fixed',
+  },
+  title: {
+    fontFamily: '"Comic Sans MS", "Comic Sans", cursive',
   },
 }));
 
@@ -82,35 +106,72 @@ function Channels() {
 
   return (
     <div className={classes.root}>
-      <h2 id='category'>Channels</h2>
-      <div id='channels'>
+      <AppBar position="static" style={{backgroundColor: '#39123e'}}>
+        <Toolbar>
+          <IconButton edge="start"
+            className={classes.menuButton} color="inherit" aria-label="menu">
+            <ArrowDropDownCircleIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {/* {workspace.name} */}
+            CSE183
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <h4 id='category'
+        style={{margin: 0, marginTop: 5, paddingLeft: 10,
+          fontFamily: '"Comic Sans MS", "Comic Sans", cursive'}}>
+          Channels
+      </h4>
+      <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
           if (channel.category === 'Channels') {
             list = (
-              <table key={channel.name}><tbody><tr><td><button
-                id={channel.id}
-                onClick={handleChange}>#{channel.name}
-              </button></td></tr></tbody></table>
+              <List component='nav'
+                aria-label='main mailbox folders' key={channel.name}>
+                <ListItem
+                  button id={channel.id} className={classes.list}
+                  onClick={handleChange}>
+                  <ListItemIcon
+                    style={{width: '20px', minWidth: 0, fontSize: '14pt'}}>
+                      #
+                  </ListItemIcon>
+                  <ListItemText primary={channel.name}/>
+                </ListItem>
+              </List>
             );
           } return list;
         })}
       </div>
-      <h2 id='category'>Direct Messages</h2>
-      <div id='channels'>
+      <h4 id='category'
+        style={{margin: 0, marginTop: 1, paddingLeft: 10,
+          fontFamily: '"Comic Sans MS", "Comic Sans", cursive'}}>
+          Direct Messages
+      </h4>
+      <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
           if (channel.category === 'DMs') {
             list = (
-              <table key={channel.name}><tbody><tr><td><button>{channel.name}
-              </button></td></tr></tbody></table>
+              <List component='nav'
+                aria-label='main mailbox folders' key={channel.name}>
+                <ListItem button id={channel.id} className={classes.list}
+                  onClick={handleChange}>
+                  <ListItemIcon
+                    style={{width: '20px', minWidth: 0, fontSize: '14pt'}}>
+                      #
+                  </ListItemIcon>
+                  <ListItemText primary={channel.name}/>
+                </ListItem>
+              </List>
             );
           } return list;
         })}
       </div>
       <div id='channels'>
       </div>
-      <button onClick={() => history.push('/channels')}>Home</button>
+      {/* <button onClick={() => history.push('/channels')}>Home</button> */}
       <BottomNavigation
         className={classes.bottomNav}>
         {/* value={value} onChange={handleChange} className={classes.root}> */}
