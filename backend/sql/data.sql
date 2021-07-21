@@ -24,4 +24,4 @@ INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'DMs', 'Jame
 INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'DMs', 'Bella', ARRAY ['Michael', 'Bella'] FROM workspace;
 
 -- Creating Starting Messages --
-INSERT INTO message (createdby, createdtime, content, replies, reactions) SELECT name, current_timestamp, 'Testing, One, Two, Three.', '{"Replies": "Okay, here we go..."}', 'Laugh' FROM users WHERE name = 'Bella';
+INSERT INTO message (channelid, createdby, createdtime, content, replies, reactions) SELECT id, 'Bella', current_timestamp, 'Testing, One, Two, Three.', '{"Replies": "Okay, here we go..."}', 'Laugh' FROM channel WHERE name = 'General';
