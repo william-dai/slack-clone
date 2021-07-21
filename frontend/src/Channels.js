@@ -35,6 +35,38 @@ function fetchChannels(setChannels) {
 
 /**
  *
+ * @param {*} setMessages
+ * @param {*} id
+ */ /*
+function fetchMessages(setMessages, id) {
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  fetch('/v0/message', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      // setError('');
+      setMessages(json);
+    })
+    .catch((error) => {
+      console.log(error);
+      setMessages([]);
+    });
+} */
+
+/**
+ *
  * @return {object}
  */
 function Channels() {
@@ -43,6 +75,8 @@ function Channels() {
   // const [name, setName] = React.useState(user ? user.name : '');
   // const [error, setError] = React.useState('Logged out');
   const history = useHistory();
+  let [messageDisplay, setMessageDisplay] = React.useState(false);
+  const [messages/* , setMessages */] = React.useState([]);
 
   /* const logout = () => {
     localStorage.removeItem('user');
@@ -51,6 +85,12 @@ function Channels() {
     setError('Logged Out');
     history.push('/');
   } */
+
+  const handleChannelChange = (event) => {
+    console.log(event.currentTarget.id);
+    setMessageDisplay(messageDisplay = true);
+    // fetchMessages(setMessages, event.currentTarget.id);
+  };
 
   React.useEffect(() => {
     fetchChannels(setChannels /* , setError */);
@@ -63,7 +103,9 @@ function Channels() {
         {channels.map((channel) => {
           if (channel.category === 'Channels') {
             return (
-              <table key={channel.name}><tbody><tr><td><button>#{channel.name}
+              <table key={channel.name}><tbody><tr><td><button
+                id={channel.workspaceid}
+                onClick={handleChannelChange}>#{channel.name}
               </button></td></tr></tbody></table>
             );
           }
@@ -83,6 +125,14 @@ function Channels() {
       <div id='channels'>
       </div>
       <button onClick={() => history.push('/channels')}>Home</button>
+      <h2>Placeholder Messages</h2>
+      <div open={messageDisplay}>
+        <div id='messages'>
+          {messages.map((message) => (
+            <tbody><tr><td>{message}</td></tr></tbody>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -18,6 +18,16 @@ exports.getMessages = async () => {
   return rows;
 };
 
+exports.getMessagesByChannel = async (givenChannel) => {
+  let select = 'SELECT * FROM message WHERE channelid = $1';
+  let query = {
+    text: select,
+    values: [givenChannel],
+  };
+  const {rows} = await pool.query(query);
+  return rows;
+};
+
 exports.createMessage = async (givenContent, givenChannel, givenUser) => {
   let select = `INSERT INTO message (channelid, createdby,createdtime, content, replies, reactions) VALUES ($1, $2, current_timestamp, $3, '{"Replies": ""}', 'Laugh')`;
   let query = {
