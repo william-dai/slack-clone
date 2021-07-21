@@ -1,5 +1,5 @@
 import React from 'react';
-// import {useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 /**
  *
@@ -42,7 +42,7 @@ function Channels() {
   const [channels, setChannels] = React.useState([]);
   // const [name, setName] = React.useState(user ? user.name : '');
   // const [error, setError] = React.useState('Logged out');
-  // const history = useHistory();
+  const history = useHistory();
 
   /* const logout = () => {
     localStorage.removeItem('user');
@@ -58,16 +58,17 @@ function Channels() {
 
   return (
     <div>
-      <h2 id='channelTitle'>Channels</h2>
-      <table id='channels'>
-        <tbody>
-          <tr>
-            {channels.map((channel) => (
-              <td><button>#{channel.name}</button></td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+      <h2 id='category'>Channels</h2>
+      <div id='channels'>
+        {channels.map((channel) => (
+          <table key={channel.name}><tbody><tr><td><button>#{channel.name}
+          </button></td></tr></tbody></table>
+        ))}
+      </div>
+      <h2 id='category'>Direct Messages</h2>
+      <div id='channels'>
+      </div>
+      <button onClick={() => history.push('/channels')}>[ ]</button>
     </div>
   );
 };
