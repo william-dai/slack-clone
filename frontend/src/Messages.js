@@ -42,17 +42,24 @@ function fetchMessages(setMessages, id) {
  */
 function Messages() {
   const history = useHistory();
-  const [messages, setMessages] = React.useState([]);
-
   let data = window.location.pathname;
   data = data.substring(data.lastIndexOf('/') + 1);
-  console.log(data);
+
+  const [messages, setMessages] = React.useState([]);
+  let [send, setSend] = React.useState('');
+
+  const handleInputChange = (event) => {
+    setSend(send = event.target.value);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    console.log(send);
+  };
 
   React.useEffect(() => {
     fetchMessages(setMessages, data);
-  }, []);
-
-  console.log(messages);
+  }, [data]);
 
   return (
     <div>
@@ -61,6 +68,11 @@ function Messages() {
         <p key={index}>{message.content}</p>
       ))}
       <button onClick={() => history.push('/channels')}>Home</button>
+      <form onSubmit={onSubmit}>
+        <input type="message" placeholder="placeholder text"
+          value={send} onChange={handleInputChange}/>
+        <input type="submit" value="Submit"/>
+      </form>
     </div>
   );
 };

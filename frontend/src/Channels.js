@@ -96,25 +96,27 @@ function Channels() {
       <h2 id='category'>Channels</h2>
       <div id='channels'>
         {channels.map((channel) => {
+          let list = '';
           if (channel.category === 'Channels') {
-            return (
+            list = (
               <table key={channel.name}><tbody><tr><td><button
                 id={channel.id}
                 onClick={handleChange}>#{channel.name}
               </button></td></tr></tbody></table>
             );
-          }
+          } return list;
         })}
       </div>
       <h2 id='category'>Direct Messages</h2>
       <div id='channels'>
         {channels.map((channel) => {
+          let list = '';
           if (channel.category === 'DMs') {
-            return (
+            list = (
               <table key={channel.name}><tbody><tr><td><button>{channel.name}
               </button></td></tr></tbody></table>
             );
-          }
+          } return list;
         })}
       </div>
       <div id='channels'>
