@@ -44,20 +44,11 @@ function fetchChannels(setChannels) {
     });
 };
 
-/**
- *
-<<<<<<< frontend/src/Channels.js
- * @param {*} setMessages
- * @param {*} id
- */ /*
-*/
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
     height: '100%',
     width: '100%',
-    // bottom: 0,
     margin: 0,
   },
   bottomNav: {
@@ -70,8 +61,6 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  *
-=======
->>>>>>> frontend/src/Channels.js
  * @return {object}
  */
 function Channels() {
@@ -126,7 +115,8 @@ function Channels() {
         className={classes.bottomNav}>
         {/* value={value} onChange={handleChange} className={classes.root}> */}
         <BottomNavigationAction
-          label="Home" value="home" icon={<HomeIcon />} />
+          label="Home" value="home" icon={<HomeIcon />}
+          onClick={() => history.push('/test')}/>
         <BottomNavigationAction
           label="Messages" value="messages" icon={<ForumIcon />} />
         <BottomNavigationAction
