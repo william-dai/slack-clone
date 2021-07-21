@@ -14,6 +14,10 @@ INSERT INTO workspace (name, users) VALUES ('CSE183', ARRAY ['Michael', 'Nathan'
 
 -- Creating Channels --
 INSERT INTO channel (workspaceid, name, users) SELECT id, 'General', ARRAY ['Michael', 'Nathan'] FROM workspace;
+INSERT INTO channel (workspaceid, name, users) SELECT id, 'assignment-1', ARRAY ['Michael', 'Nathan'] FROM workspace;
+INSERT INTO channel (workspaceid, name, users) SELECT id, 'assignment-2', ARRAY ['Michael', 'Nathan'] FROM workspace;
+INSERT INTO channel (workspaceid, name, users) SELECT id, 'assignment-3', ARRAY ['Michael', 'Nathan'] FROM workspace;
+INSERT INTO channel (workspaceid, name, users) SELECT id, 'assignment-4', ARRAY ['Michael', 'Nathan'] FROM workspace;
 
 -- Creating Starting Messages --
 INSERT INTO message (createdby, createdtime, content, replies, reactions) SELECT name, current_timestamp, 'Testing, One, Two, Three.', '{"Replies": "Okay, here we go..."}', 'Laugh' FROM users WHERE name = 'Bella';

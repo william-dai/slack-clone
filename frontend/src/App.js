@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
 import Login from './Login';
+import Channels from './Channels';
 /*
 import Emoji from './Emoji';
 */
@@ -76,6 +77,9 @@ function App() {
       <Switch>
         <Route path="/" exact>
           <Login/>
+        </Route>
+        <Route path="/channels">
+          <Channels/>
         </Route>
       </Switch>
     </BrowserRouter>
