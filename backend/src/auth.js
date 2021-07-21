@@ -27,7 +27,6 @@ exports.authenticate = async (req, res) => {
             expiresIn: '30m',
             algorithm: 'HS256',
           });
-      console.log('made it?');
       res.status(200).json({name: rows[0].email, accessToken: accessToken});
       return;
     }

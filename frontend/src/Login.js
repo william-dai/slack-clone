@@ -1,5 +1,7 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 /**
  *
@@ -44,16 +46,36 @@ function Login() {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2 id='signInTitle'>Sign in to Kinda Slack</h2>
-      <input type="email" name="email" placeholder="name@work-email.com"
-        onChange={handleInputChange} required />
-      <br />
-      <input type="pass" name="pass" placeholder="Password"
-        onChange={handleInputChange} required />
-      <br /><br />
-      <input type ="submit" value="submit" />
-    </form>
+    <div>
+      <form onSubmit={onSubmit}
+        style={{width: '50%', margin: 'auto', fontFamily: 'sans-serif'}}>
+        <h2 id='signInTitle' style={{textAlign: 'center'}}>Login</h2>
+        <TextField
+          id="standard-password-input"
+          style={{margin: 0}}
+          label="Username"
+          name="email"
+          type="email"
+          autoComplete="current-username"
+          onChange={handleInputChange}
+        />
+        <br />
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          name="pass"
+          type="pass"
+          autoComplete="current-password"
+          onChange={handleInputChange}
+        />
+        <br /><br />
+        <Button variant='contained' type = "submit"
+          style={{backgroundColor: 'black', color: 'white', borderRadius: 0,
+            textAlign: 'center', float: 'right'}}>
+          Sign In
+        </Button>
+      </form>
+    </div>
   );
 };
 
