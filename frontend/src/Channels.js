@@ -10,11 +10,14 @@ function fetchChannels(setChannels) {
   if (!item) {
     return;
   }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
   fetch('/v0/channel', {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }),
   })
     .then((res) => {
       if (!res.ok) {

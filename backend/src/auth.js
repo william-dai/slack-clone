@@ -19,22 +19,21 @@ exports.authenticate = async (req, res) => {
     values: [email],
   };
   const {rows} = await pool.query(query);
-  console.log(query);
   if (rows.length !== 0) {
-    // if (rows[0].email === email && rows[0].pass === pass) {
     if (rows[0].email === email && bcrypt.compareSync(pass, rows[0].pass)) {
-      // res.status(200).json({email: rows[0].email, pass: rows[0].pass});
       const accessToken = jwt.sign(
-          {email: rows[0].email, pass: rows[0].pass},
+          {email: rows[0].email, role: rows[0].role},
           secrets.accessToken, {
             expiresIn: '30m',
             algorithm: 'HS256',
           });
+      console.log('made it?');
       res.status(200).json({name: rows[0].email, accessToken: accessToken});
-      // res.status(200).json({name: rows[0].email, pass: rows[0].pass});
+      return;
     }
   }
   res.status(401).send('Failed to authenticate user.');
+  return;
 };
 
 exports.check = (req, res, next) => {
