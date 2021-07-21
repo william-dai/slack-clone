@@ -20,7 +20,7 @@ function Login() {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(JSON.stringify(user));
-    fetch('/authenticate', {
+    fetch('/v0/authenticate', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
