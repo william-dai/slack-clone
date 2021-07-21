@@ -1,5 +1,13 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
+import {BottomNavigation} from '@material-ui/core';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import HomeIcon from '@material-ui/icons/Home';
+import ForumIcon from '@material-ui/icons/Forum';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import SearchIcon from '@material-ui/icons/Search';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 /**
  *
@@ -35,6 +43,42 @@ function fetchMessages(setMessages, id) {
       setMessages([]);
     });
 };
+/**
+ *
+ * @param {*} message
+ */
+function addMessage(message) {
+  const item = localStorage.getItem('user');
+  console.log(message);
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/message', {
+    method: 'POST',
+    body: JSON.stringify(message),
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${bearerToken}`,
+    }),
+  });
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    margin: 0,
+  },
+  bottomNav: {
+    position: 'fixed',
+    bottom: '0%',
+    margin: 'auto',
+    width: '100%',
+  },
+}));
 
 /**
  *
@@ -42,11 +86,14 @@ function fetchMessages(setMessages, id) {
  */
 function Messages() {
   const history = useHistory();
+  const item = localStorage.getItem('user');
+  const user = JSON.parse(item);
   let data = window.location.pathname;
   data = data.substring(data.lastIndexOf('/') + 1);
 
   const [messages, setMessages] = React.useState([]);
   let [send, setSend] = React.useState('');
+  let [sent, setSent] = React.useState({});
 
   const handleInputChange = (event) => {
     setSend(send = event.target.value);
@@ -55,7 +102,12 @@ function Messages() {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(send);
+    setSent(sent = {message: send, channel: data, name: user.name});
+    console.log(sent);
+    addMessage(sent);
   };
+
+  const classes = useStyles();
 
   React.useEffect(() => {
     fetchMessages(setMessages, data);
@@ -73,6 +125,21 @@ function Messages() {
           value={send} onChange={handleInputChange}/>
         <input type="submit" value="Submit"/>
       </form>
+      <BottomNavigation
+        className={classes.bottomNav}>
+        {/* value={value} onChange={handleChange} className={classes.root}> */}
+        <BottomNavigationAction
+          label="Home" value="home" icon={<HomeIcon />}
+          onClick={() => history.push('/channels')}/>
+        <BottomNavigationAction
+          label="Messages" value="messages" icon={<ForumIcon />} />
+        <BottomNavigationAction
+          label="At" value="at" icon={<AlternateEmailIcon />} />
+        <BottomNavigationAction
+          label="Search" value="search" icon={<SearchIcon />} />
+        <BottomNavigationAction
+          label="Profile" value="profile" icon={<PersonOutlineIcon />} />
+      </BottomNavigation>
     </div>
   );
 };

@@ -21,7 +21,7 @@ exports.getMessagesByChannel = async(req, res) => {
 
 exports.createMessage = async(req, res) => {
   const message =
-  await db.createMessage(req.query.message, req.query.channel, req.query.user);
+  await db.createMessage(req.body.message, req.body.channel, req.body.name);
   if (message.rowCount !== 0) {
     res.status(200).json(message);
   } else {
