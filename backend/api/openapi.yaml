@@ -150,25 +150,39 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       description: Create New Message
-      parameters:
-      - name: message
-        in: query
-        description: Message to Post
+      requestBody:
+        description: testing
         required: true
-        schema:
-          type: string
-      - name: channel
-        in: query
-        description: Channel Message is Under
-        required: true
-        schema:
-          type: string
-      - name: user
-        in: query
-        description: User Who Posted Message
-        required: true
-        schema:
-          type: string
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                channel:
+                  type: string
+                name:
+                  type: string
+      #parameters:
+      #- name: message
+      #  in: query
+      #  description: Message to Post
+      #  required: true
+      #  schema:
+      #    type: string
+      #- name: channel
+      #  in: query
+      #  description: Channel Message is Under
+      #  required: true
+      #  schema:
+      #    type: string
+      #- name: user
+      #  in: query
+      #  description: User Who Posted Message
+      #  required: true
+      #  schema:
+      #    type: string
       responses:
         200:
           description: Created New Message
