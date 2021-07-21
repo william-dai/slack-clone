@@ -60,15 +60,29 @@ function Channels() {
     <div>
       <h2 id='category'>Channels</h2>
       <div id='channels'>
-        {channels.map((channel) => (
-          <table key={channel.name}><tbody><tr><td><button>#{channel.name}
-          </button></td></tr></tbody></table>
-        ))}
+        {channels.map((channel) => {
+          if (channel.category === 'Channels') {
+            return (
+              <table key={channel.name}><tbody><tr><td><button>#{channel.name}
+              </button></td></tr></tbody></table>
+            );
+          }
+        })}
       </div>
       <h2 id='category'>Direct Messages</h2>
       <div id='channels'>
+        {channels.map((channel) => {
+          if (channel.category === 'DMs') {
+            return (
+              <table key={channel.name}><tbody><tr><td><button>{channel.name}
+              </button></td></tr></tbody></table>
+            );
+          }
+        })}
       </div>
-      <button onClick={() => history.push('/channels')}>[ ]</button>
+      <div id='channels'>
+      </div>
+      <button onClick={() => history.push('/channels')}>Home</button>
     </div>
   );
 };
