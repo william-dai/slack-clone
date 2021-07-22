@@ -17,7 +17,7 @@ exports.getMessagesByChannel = async(req, res) => {
     }
   }
   res.status(404).send();
-}
+};
 
 exports.createMessage = async(req, res) => {
   const message =
@@ -47,3 +47,14 @@ exports.createReply = async(req, res) => {
     res.status(404).send();
   }
 };
+
+exports.getRepliesById = async(req, res) => {
+  console.log('test');
+  if (req.params.id) {
+    const replies = await db.getRepliesById(req.params.id);
+    if (replies) {
+      res.status(200).json(replies);
+    }
+  }
+  res.status(404).send();
+}

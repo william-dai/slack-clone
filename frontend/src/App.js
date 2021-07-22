@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import Login from './Login';
 import Channels from './Channels';
 import Messages from './Messages';
+import Replies from './Replies';
 
 /**
  * Simple component with no state.
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path="/messages">
           <Messages/>
+        </Route>
+        <Route path="/replies">
+          <Replies/>
         </Route>
       </Switch>
     </BrowserRouter>

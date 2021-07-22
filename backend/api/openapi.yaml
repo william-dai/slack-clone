@@ -164,25 +164,6 @@ paths:
                   type: string
                 name:
                   type: string
-      #parameters:
-      #- name: message
-      #  in: query
-      #  description: Message to Post
-      #  required: true
-      #  schema:
-      #    type: string
-      #- name: channel
-      #  in: query
-      #  description: Channel Message is Under
-      #  required: true
-      #  schema:
-      #    type: string
-      #- name: user
-      #  in: query
-      #  description: User Who Posted Message
-      #  required: true
-      #  schema:
-      #    type: string
       responses:
         200:
           description: Created New Message
@@ -262,6 +243,32 @@ paths:
                 $ref: '#/components/schemas/Reply'
         400:
           description: Could Not Create New Reply
+
+  /reply/{id}:
+    get:
+      description: Getting message from specific message
+      parameters:
+      - name: id
+        in: path
+        description: id of message
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Received Reply/s
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplyResponse'
+        404:
+          description: Reply/s Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
   schemas:

@@ -18,14 +18,26 @@ exports.getMessages = async () => {
   return rows;
 };
 
+getMessageById = async(givenId) => {
+  let select = 'SELECT * FROM message WHERE id = $1';
+  let query = {
+    text: select,
+    values: [givenId],
+  };
+  const {rows} = await pool.query(query);
+  return rows.length !== 0 ? rows : undefined;
+}
+
 exports.getMessagesByChannel = async (givenChannelId) => {
   let select = 'SELECT * FROM message WHERE channelid = $1';
   let query = {
     text: select,
     values: [givenChannelId],
   };
-  const {rows} = await pool.query(query);
-  console.log(rows);
+  let {rows} = await pool.query(query);
+  if (rows.length === 0) {
+    rows = getMessageById(givenChannelId);
+  }
   return rows.length !== 0 ? rows : undefined;
 };
 
@@ -57,4 +69,15 @@ exports.addReply = async (givenContent, givenMessage, givenUser) => {
   }
   const reply = await pool.query(query);
   return reply;
+};
+
+exports.getRepliesById = async (givenMessageId) => {
+  let select = 'SELECT * FROM reply WHERE messageid = $1';
+  let query = {
+    text: select,
+    values: [givenMessageId],
+  };
+  const {rows} = await pool.query(query);
+  console.log(rows);
+  return rows.length !== 0 ? rows : undefined;
 };

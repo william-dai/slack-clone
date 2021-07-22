@@ -121,7 +121,6 @@ const useStyles = makeStyles((theme) => ({
  * @return {object}
  */
 function Channels() {
-  // const user = JSON.parse(localStorage.getItem('user'));
   const [channels, setChannels] = React.useState([]);
   const [workspace, setWorkspace] = React.useState([]);
   // const [name, setName] = React.useState(user ? user.name : '');
@@ -129,6 +128,10 @@ function Channels() {
   let [work, changeWork] = React.useState(0);
   const history = useHistory();
   // let num = 0;
+  const item = localStorage.getItem('user');
+  if (!item) {
+    history.push('/');
+  }
 
   const handleChange = (event) => {
     console.log(event.currentTarget);

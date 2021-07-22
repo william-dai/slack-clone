@@ -124,6 +124,9 @@ const useStyles = makeStyles((theme) => ({
 function Messages() {
   const history = useHistory();
   const item = localStorage.getItem('user');
+  if (!item) {
+    history.push('/');
+  }
   const user = JSON.parse(item);
   let data = window.location.pathname;
   data = data.substring(data.lastIndexOf('/') + 1);
