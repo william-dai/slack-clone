@@ -27,7 +27,13 @@ exports.authenticate = async (req, res) => {
             expiresIn: '30m',
             algorithm: 'HS256',
           });
-      res.status(200).json({name: rows[0].email, accessToken: accessToken});
+      res.status(200).json({
+        name: rows[0].name,
+        email: rows[0].email,
+        role: rows[0].role,
+        workspace: rows[0].workspace,
+        status: rows[0].status,
+        accessToken: accessToken});
       return;
     }
   }
