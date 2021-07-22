@@ -43,13 +43,14 @@ function fetchMessages(setMessages, id) {
       setMessages([]);
     });
 };
+
 /**
  *
+ * @param {*} sent
  * @param {*} message
  */
-function addMessage(message) {
+function addMessage(sent, message) {
   const item = localStorage.getItem('user');
-  console.log(message);
   if (!item) {
     return;
   }
@@ -57,12 +58,24 @@ function addMessage(message) {
   const bearerToken = user ? user.accessToken : '';
   fetch('/v0/message', {
     method: 'POST',
-    body: JSON.stringify(message),
+    body: JSON.stringify(sent),
     headers: new Headers({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${bearerToken}`,
     }),
-  });
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then(() => {
+      message(sent);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -101,13 +114,25 @@ function Messages() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(send);
     setSent(sent = {message: send, channel: data, name: user.name});
-    console.log(sent);
-    addMessage(sent);
+    addMessage(sent, messages);
+    fetchMessages(setMessages, data);
   };
 
   const classes = useStyles();
+
+  const timeStamp = (time) => {
+    const temp = new Date(time);
+    let hours = temp.getHours();
+    let minutes = temp.getMinutes();
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+    return hours + ':' + minutes;
+  };
 
   React.useEffect(() => {
     fetchMessages(setMessages, data);
@@ -115,9 +140,13 @@ function Messages() {
 
   return (
     <div>
-      <p>test</p>
+      <h2>Test</h2>
       {messages.map((message, index) => (
-        <p key={index}>{message.content}</p>
+        <div>
+          <p key={index} time={message.createdtime}>
+            {message.createdby} : {timeStamp(message.createdtime)}</p>
+          <p>{message.content}</p>
+        </div>
       ))}
       <button onClick={() => history.push('/channels')}>Home</button>
       <form onSubmit={onSubmit}>
@@ -125,6 +154,7 @@ function Messages() {
           value={send} onChange={handleInputChange}/>
         <input type="submit" value="Submit"/>
       </form>
+
       <BottomNavigation
         className={classes.bottomNav}>
         {/* value={value} onChange={handleChange} className={classes.root}> */}
