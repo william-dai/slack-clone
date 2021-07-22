@@ -8,6 +8,17 @@ import ForumIcon from '@material-ui/icons/Forum';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import SearchIcon from '@material-ui/icons/Search';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SendIcon from '@material-ui/icons/Send';
 
 /**
  *
@@ -85,11 +96,20 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: 0,
     left: 0,
+    top: 0,
   },
   bottomNav: {
     position: 'fixed',
     bottom: '0%',
     margin: 'auto',
+    width: '100%',
+  },
+  list: {
+    margin: 0,
+  },
+  inputText: {
+    position: 'fixed',
+    bottom: 60,
     width: '100%',
   },
 }));
@@ -122,38 +142,71 @@ function Messages() {
 
   const classes = useStyles();
 
-  const timeStamp = (time) => {
-    const temp = new Date(time);
-    let hours = temp.getHours();
-    let minutes = temp.getMinutes();
-    if (hours < 10) {
-      hours = '0' + hours;
-    }
-    if (minutes < 10) {
-      minutes = '0' + minutes;
-    }
-    return hours + ':' + minutes;
-  };
+  // const timeStamp = (time) => {
+  //   const temp = new Date(time);
+  //   let hours = temp.getHours();
+  //   let minutes = temp.getMinutes();
+  //   if (hours < 10) {
+  //     hours = '0' + hours;
+  //   }
+  //   if (minutes < 10) {
+  //     minutes = '0' + minutes;
+  //   }
+  //   return hours + ':' + minutes;
+  // };
 
   React.useEffect(() => {
     fetchMessages(setMessages, data);
   }, [data]);
 
   return (
-    <div>
-      <h2>Test</h2>
+    <div className={classes.root}>
+      <AppBar position="static" style={{backgroundColor: '#39123e'}}>
+        <Toolbar>
+          <IconButton edge="start"
+            className={classes.menuButton} color="inherit" aria-label="menu"
+            onClick={() => history.push('/channels')}>
+            {/* <ArrowDropDownCircleIcon /> */}
+            <ArrowBackIcon/>
+
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {/* {channels.workspaceid} */}
+            General
+            {/* {workspace[work].name} */}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
       {messages.map((message, index) => (
         <div>
-          <p key={index} time={message.createdtime}>
+          {/* <p key={index} time={message.createdtime}>
             {message.createdby} : {timeStamp(message.createdtime)}</p>
-          <p>{message.content}</p>
+          <p>{message.content}</p> */}
+          <List component='nav'
+            aria-label='main mailbox folders' key={index}>
+            <ListItem className={classes.list}>
+              <ListItemText primary={message.content}/>
+            </ListItem>
+          </List>
         </div>
       ))}
-      <button onClick={() => history.push('/channels')}>Home</button>
+      {/* <button onClick={() => history.push('/channels')}>Home</button> */}
       <form onSubmit={onSubmit}>
-        <input type="message" placeholder="placeholder text"
-          value={send} onChange={handleInputChange}/>
-        <input type="submit" value="Submit"/>
+        {/* <input type="message" placeholder="placeholder text"
+          value={send} onChange={handleInputChange}/> */}
+        <TextField id="outlined-basic"variant="outlined"
+          placeholder="Message" value={send} onChange={handleInputChange}
+          className={classes.inputText} size="small" InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton type="submit" value="Submit">
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}/>
+        {/* <input type="submit" value="Submit"/> */}
       </form>
 
       <BottomNavigation
