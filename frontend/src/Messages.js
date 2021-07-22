@@ -19,6 +19,9 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SendIcon from '@material-ui/icons/Send';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 /**
  *
@@ -145,18 +148,18 @@ function Messages() {
 
   const classes = useStyles();
 
-  // const timeStamp = (time) => {
-  //   const temp = new Date(time);
-  //   let hours = temp.getHours();
-  //   let minutes = temp.getMinutes();
-  //   if (hours < 10) {
-  //     hours = '0' + hours;
-  //   }
-  //   if (minutes < 10) {
-  //     minutes = '0' + minutes;
-  //   }
-  //   return hours + ':' + minutes;
-  // };
+  const timeStamp = (time) => {
+    const temp = new Date(time);
+    let hours = temp.getHours();
+    let minutes = temp.getMinutes();
+    if (hours < 10) {
+      hours = '0' + hours;
+    }
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+    return hours + ':' + minutes;
+  };
 
   React.useEffect(() => {
     fetchMessages(setMessages, data);
@@ -181,27 +184,30 @@ function Messages() {
         </Toolbar>
       </AppBar>
 
-      {messages.map((message, index) => (
-        <div>
-          {/* <p key={index} time={message.createdtime}>
-            {message.createdby} : {timeStamp(message.createdtime)}</p>
-          <p>{message.content}</p> */}
-          <List component='nav'
-            aria-label='main mailbox folders' key={index}>
-            <ListItem className={classes.list}>
-              <ListItemText primary={message.content}/>
-              <button onClick={
-                () => history.push(
-                  '/replies/' + message.channelid)}>Replies</button>
-            </ListItem>
-          </List>
-        </div>
-      ))}
-      {/* <button onClick={() => history.push('/channels')}>Home</button> */}
+      <div style={{maxHeight: '70%', overflow: 'auto'}}>
+        {messages.map((message, index) => (
+          <div>
+            <List component='nav'
+              aria-label='main mailbox folders' key={index}>
+              <ListItem className={classes.list}>
+                <ListItemIcon>
+                  <AccountCircleIcon />
+                </ListItemIcon>
+                <ListItemText primary={message.createdby}
+                  secondary={message.content}/>
+                <ListItemText style={{textAlign: 'right'}}
+                  primary={timeStamp(message.createdtime)}/>
+                <IconButton
+                  onClick={() => history.push('/replies/'+message.channelid)}>
+                  <ReplyIcon/>
+                </IconButton>
+              </ListItem>
+            </List>
+          </div>
+        ))}
+      </div>
       <form onSubmit={onSubmit}>
-        {/* <input type="message" placeholder="placeholder text"
-          value={send} onChange={handleInputChange}/> */}
-        <TextField id="outlined-basic"variant="outlined"
+        <TextField id="outlined-basic" variant="outlined"
           placeholder="Message" value={send} onChange={handleInputChange}
           className={classes.inputText} size="small" InputProps={{
             endAdornment: (
@@ -212,12 +218,10 @@ function Messages() {
               </InputAdornment>
             ),
           }}/>
-        {/* <input type="submit" value="Submit"/> */}
       </form>
 
       <BottomNavigation
         className={classes.bottomNav}>
-        {/* value={value} onChange={handleChange} className={classes.root}> */}
         <BottomNavigationAction
           label="Home" value="home" icon={<HomeIcon />}
           onClick={() => history.push('/channels')}/>
