@@ -21,6 +21,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SendIcon from '@material-ui/icons/Send';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ReplyIcon from '@material-ui/icons/Reply';
 
 /**
  *
@@ -193,6 +194,10 @@ function Messages() {
                   secondary={message.content}/>
                 <ListItemText style={{textAlign: 'right'}}
                   primary={timeStamp(message.createdtime)}/>
+                <IconButton
+                  onClick={() => history.push('/replies/'+message.channelid)}>
+                  <ReplyIcon/>
+                </IconButton>
               </ListItem>
             </List>
           </div>
