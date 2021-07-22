@@ -191,7 +191,8 @@ function Messages() {
             <ListItem className={classes.list}>
               <ListItemText primary={message.content}/>
               <button onClick={
-                () => history.push('/replies/' + message.id)}>Replies</button>
+                () => history.push(
+                  '/replies/' + message.channelid)}>Replies</button>
             </ListItem>
           </List>
         </div>
