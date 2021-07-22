@@ -121,6 +121,9 @@ const useStyles = makeStyles((theme) => ({
 function Messages() {
   const history = useHistory();
   const item = localStorage.getItem('user');
+  if (!item) {
+    history.push('/');
+  }
   const user = JSON.parse(item);
   let data = window.location.pathname;
   data = data.substring(data.lastIndexOf('/') + 1);
@@ -187,6 +190,8 @@ function Messages() {
             aria-label='main mailbox folders' key={index}>
             <ListItem className={classes.list}>
               <ListItemText primary={message.content}/>
+              <button onClick={
+                () => history.push('/replies/' + message.id)}>Replies</button>
             </ListItem>
           </List>
         </div>

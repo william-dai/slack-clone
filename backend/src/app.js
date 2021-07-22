@@ -43,6 +43,7 @@ app.post('/v0/message', auth.check, message.createMessage);
 app.get('/v0/message/:id', auth.check, message.getMessagesByChannel);
 app.get('/v0/reply', auth.check, message.getReplies);
 app.post('/v0/reply', auth.check, message.createReply);
+app.get('/v0/reply/:id', auth.check, message.getRepliesById);
 
 app.use((err, req, res, next) => {
   res.status(err.status).json({

@@ -58,3 +58,14 @@ exports.addReply = async (givenContent, givenMessage, givenUser) => {
   const reply = await pool.query(query);
   return reply;
 };
+
+exports.getRepliesById = async (givenMessageId) => {
+  let select = 'SELECT * FROM reply WHERE messageid = $1';
+  let query = {
+    text: select,
+    values: [givenMessageId],
+  };
+  const {rows} = await pool.query(query);
+  console.log(rows);
+  return rows.length !== 0 ? rows : undefined;
+};
