@@ -198,7 +198,7 @@ function Messages() {
                 <ListItemText style={{textAlign: 'right'}}
                   primary={timeStamp(message.createdtime)}/>
                 <IconButton
-                  onClick={() => history.push('/replies/'+message.channelid)}>
+                  onClick={() => history.push('/replies/' + message.id)}>
                   <ReplyIcon/>
                 </IconButton>
               </ListItem>

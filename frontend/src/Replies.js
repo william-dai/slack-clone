@@ -163,8 +163,12 @@ function Replies() {
           value={send} onChange={handleInputChange}/>
         <input type="submit" value="Submit"/>
       </form>
-      <button onClick={() => history.push(
-        '/messages/' + data)}>Return to Thread</button>
+      {message.map((message) => (
+        <div>
+          <button onClick={() => history.push(
+            '/messages/' + message.channelid)}>Return to Thread</button>
+        </div>
+      ))}
     </div>
   );
 }
