@@ -37,10 +37,14 @@ app.get('/v0/dummy', dummy.get);
 // Your routes go here
 app.get('/v0/users/', auth.check, users.getUsers);
 app.get('/v0/workspace/', auth.check, workspace.getWorkspace);
+
 app.get('/v0/channel/', auth.check, channel.getChannels);
+app.get('/v0/channel/:id', auth.check, channel.getChannelById);
+
 app.get('/v0/message', auth.check, message.getMessages);
 app.post('/v0/message', auth.check, message.createMessage);
 app.get('/v0/message/:id', auth.check, message.getMessagesByChannel);
+
 app.get('/v0/reply', auth.check, message.getReplies);
 app.post('/v0/reply', auth.check, message.createReply);
 app.get('/v0/reply/:id', auth.check, message.getRepliesById);

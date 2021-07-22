@@ -27,3 +27,13 @@ exports.createChannel = async (name, workspace) => {
   const channel = await pool.query(query);
   return channel;
 };
+
+exports.getChannelById = async (id) => {
+  let select = 'SELECT * FROM channel WHERE id = $1';
+  let query = {
+    text: select,
+    values: [id],
+  };
+  const {rows} = await pool.query(query);
+  return rows.length !== 0 ? rows : undefined;
+};

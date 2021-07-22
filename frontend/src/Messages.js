@@ -60,6 +60,41 @@ function fetchMessages(setMessages, id) {
 
 /**
  *
+ * @param {*} setChannel
+ * @param {*} id
+ */
+function fetchChannel(setChannel, id) {
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/channel/' + id, {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      // setError('');
+      setChannel(json);
+    })
+    .catch((error) => {
+      console.log(error);
+      setChannel([]);
+    });
+}
+
+/**
+ *
  * @param {*} sent
  * @param {*} message
  */
@@ -131,6 +166,7 @@ function Messages() {
   let data = window.location.pathname;
   data = data.substring(data.lastIndexOf('/') + 1);
 
+  const [channel, setChannel] = React.useState([]);
   const [messages, setMessages] = React.useState([]);
   let [send, setSend] = React.useState('');
   let [sent, setSent] = React.useState({});
@@ -162,6 +198,12 @@ function Messages() {
   };
 
   React.useEffect(() => {
+    fetchChannel(setChannel, data);
+  }, [data]);
+
+  console.log(channel);
+
+  React.useEffect(() => {
     fetchMessages(setMessages, data);
   }, [data]);
 
@@ -174,13 +216,13 @@ function Messages() {
             onClick={() => history.push('/channels')}>
             {/* <ArrowDropDownCircleIcon /> */}
             <ArrowBackIcon/>
-
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {/* {channels.workspaceid} */}
-            General
-            {/* {workspace[work].name} */}
-          </Typography>
+          {/* {channels.workspaceid} */}
+          {channel.map((channel) => (
+            <Typography variant="h6" className={classes.title}>
+              {channel.name}</Typography>
+          ))}
+          {/* {workspace[work].name} */}
         </Toolbar>
       </AppBar>
 

@@ -154,6 +154,9 @@ function Channels() {
 
   return (
     <div className={classes.root}>
+      {workspace.map(() => (
+        <div></div>
+      ))}
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
         <Toolbar>
           <IconButton edge="start"

@@ -130,6 +130,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /channel/{id}:
+    get:
+      description: Getting specific channel
+      parameters:
+      - name: id
+        in: path
+        description: id of channel
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Received Channel/s
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelResponse'
+        404:
+          description: Channel/s Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   /message:
     get:
       description: Getting Message/s
