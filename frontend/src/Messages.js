@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
     margin: 0,
+    left: 0,
   },
   bottomNav: {
     position: 'fixed',
@@ -114,7 +115,7 @@ function Messages() {
   }, [data]);
 
   return (
-    <div>
+    <div className={classes.root}>
       <p>test</p>
       {messages.map((message, index) => (
         <p key={index}>{message.content}</p>
