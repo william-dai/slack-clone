@@ -1,5 +1,5 @@
 import {BottomNavigation} from '@material-ui/core';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -53,6 +53,39 @@ function fetchChannels(setChannels) {
     });
 };
 
+/**
+ *
+ * @param {*} setWorkspace
+ */
+function fetchWorkspace(setWorkspace) {
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/workspace', {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      setWorkspace(json);
+    })
+    .catch((error) => {
+      console.log(error);
+      setWorkspace([]);
+    });
+};
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
@@ -90,15 +123,27 @@ const useStyles = makeStyles((theme) => ({
 function Channels() {
   // const user = JSON.parse(localStorage.getItem('user'));
   const [channels, setChannels] = React.useState([]);
+  const [workspace, setWorkspace] = React.useState([]);
   // const [name, setName] = React.useState(user ? user.name : '');
   // const [error, setError] = React.useState('Logged out');
+  let [work, changeWork] = React.useState(0);
   const history = useHistory();
+  // let num = 0;
 
   const handleChange = (event) => {
+    console.log(event.currentTarget);
     history.push('/messages/' + event.currentTarget.id);
   };
 
+  const handleWork = () => {
+    changeWork(work === 0 ? work = 1 : work = 0);
+  };
+
   const classes = useStyles();
+
+  useEffect(() => {
+    fetchWorkspace(setWorkspace);
+  }, []);
 
   React.useEffect(() => {
     fetchChannels(setChannels /* , setError */);
@@ -109,12 +154,14 @@ function Channels() {
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
         <Toolbar>
           <IconButton edge="start"
-            className={classes.menuButton} color="inherit" aria-label="menu">
+            className={classes.menuButton} color="inherit" aria-label="menu"
+            onClick={handleWork}>
             <ArrowDropDownCircleIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {/* {workspace.name} */}
+            {/* {channels.workspaceid} */}
             CSE183
+            {/* {workspace[work].name} */}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -126,7 +173,11 @@ function Channels() {
       <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
-          if (channel.category === 'Channels') {
+          // console.log('Channel: ' +
+          //   channel.category + ' ' + channel.workspaceid);
+          // console.log('Workspace: ' + workspace);
+          if (channel.category === 'Channels' &&
+          channel.workspaceid === workspace[work].id) {
             list = (
               <List component='nav'
                 aria-label='main mailbox folders' key={channel.name}>
@@ -177,7 +228,7 @@ function Channels() {
         {/* value={value} onChange={handleChange} className={classes.root}> */}
         <BottomNavigationAction
           label="Home" value="home" icon={<HomeIcon />}
-          onClick={() => history.push('/test')}/>
+          onClick={() => history.push('/channels')}/>
         <BottomNavigationAction
           label="Messages" value="messages" icon={<ForumIcon />} />
         <BottomNavigationAction

@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
     margin: 0,
+    left: 0,
   },
   bottomNav: {
     position: 'fixed',
