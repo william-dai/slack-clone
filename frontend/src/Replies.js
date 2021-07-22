@@ -3,6 +3,41 @@ import {useHistory} from 'react-router-dom';
 
 /**
  *
+ * @param {*} setMessage
+ * @param {*} id
+ */
+function fetchMessage(setMessage, id) {
+  const item = localStorage.getItem('user');
+  if (!item) {
+    return;
+  }
+  const user = JSON.parse(item);
+  const bearerToken = user ? user.accessToken : '';
+  fetch('/v0/message/' + id, {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': `Bearer ${bearerToken}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }),
+  })
+    .then((res) => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then((json) => {
+      // setError('');
+      setMessage(json);
+    })
+    .catch((error) => {
+      console.log(error);
+      setMessage([]);
+    });
+}
+
+/**
+ *
  * @param {*} setReplies
  * @param {*} id
  */
@@ -83,6 +118,7 @@ function Replies() {
   let data = window.location.pathname;
   data = data.substring(data.lastIndexOf('/') + 1);
   const [replies, setReplies] = React.useState([]);
+  const [message, setMessage] = React.useState([]);
   let [send, setSend] = React.useState('');
   let [sent, setSent] = React.useState({});
   const user = JSON.parse(item);
@@ -102,11 +138,19 @@ function Replies() {
     fetchReplies(setReplies, data);
   }, [data]);
 
-  console.log(replies);
+  React.useEffect(() => {
+    fetchMessage(setMessage, data);
+  }, [data]);
 
   return (
     <div>
       <h2>testing</h2>
+      {message.map((message, index) => (
+        <div>
+          <p key={index}>{message.createdby} : {message.createdtime}</p>
+          <p>{message.content}</p>
+        </div>
+      ))}
       {replies.map((reply, index) => (
         <div>
           <p key={index}>
@@ -119,7 +163,8 @@ function Replies() {
           value={send} onChange={handleInputChange}/>
         <input type="submit" value="Submit"/>
       </form>
-      <button>Placeholder</button>
+      <button onClick={() => history.push(
+        '/messages/' + data)}>Return to Thread</button>
     </div>
   );
 }
