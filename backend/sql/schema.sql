@@ -13,4 +13,7 @@ CREATE TABLE workspace(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), nam
 CREATE TABLE channel(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), workspaceid UUID, category VARCHAR(32), name VARCHAR(32), users TEXT []);
 
 -- DROP TABLE IF EXISTS message;
-CREATE TABLE message(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), channelid UUID, createdby VARCHAR(32), createdtime TIMESTAMP, content VARCHAR(1000), replies jsonb, reactions VARCHAR(32));
+CREATE TABLE message(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), channelid UUID, createdby VARCHAR(32), createdtime TIMESTAMP, content VARCHAR(1000), reactions VARCHAR(32));
+
+-- DROP TABLE IF EXISTS reply;
+CREATE TABLE reply(id UUID UNIQUE PRIMARY KEY DEFAULT gen_random_uuid(), messageid UUID, createdby VARCHAR(32), createdtime TIMESTAMP, content VARCHAR(1000), reactions VARCHAR(32));

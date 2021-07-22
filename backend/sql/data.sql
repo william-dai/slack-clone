@@ -28,4 +28,7 @@ INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid
 INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'Bella', ARRAY ['Michael', 'Bella']);
 
 -- Creating Starting Messages --
-INSERT INTO message (channelid, createdby, createdtime, content, replies, reactions) SELECT id, 'Bella', current_timestamp, 'Testing, One, Two, Three.', '{"Replies": "Okay, here we go..."}', 'Laugh' FROM channel WHERE name = 'General';
+INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'Bella', current_timestamp, 'Testing, One, Two, Three.', 'Laugh' FROM channel WHERE name = 'General';
+
+-- Creating Starting Replies --
+INSERT INTO reply (messageid, createdby, createdtime, content, reactions) SELECT id, 'Michael', current_timestamp, 'This is a reply.', 'Laugh' FROM message WHERE createdby = 'Bella';

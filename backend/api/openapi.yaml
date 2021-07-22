@@ -219,6 +219,50 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /reply:
+    get:
+      description: Getting Reply/s
+      responses:
+        200:
+          description: Received Reply/s
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplyResponse'
+        404:
+          description: Reply/s Not Found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      description: Create New Reply
+      requestBody:
+        description: testing stage
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reply:
+                  type: string
+                message:
+                  type: string
+                name:
+                  type: string
+      responses:
+        200:
+          description: Created New Reply
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reply'
+        400:
+          description: Could Not Create New Reply
+
 components:
   schemas:
     Error:
@@ -319,7 +363,29 @@ components:
           type: string
         content:
           type: string
-        replies:
+        #replies:
+        #  type: string
+        reactions:
+          type: string
+
+    ReplyResponse:
+      type: array
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reply'
+
+    Reply:
+      type: object
+      properties:
+        id:
+          type: string
+        createdby:
+          type: string
+        createdtime:
+          type: string
+        content:
           type: string
         reactions:
           type: string
