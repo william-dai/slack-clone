@@ -1,3 +1,10 @@
+/**
+ * Sources:
+ * https://stackoverflow.com/questions/52401960/multiline-secondary-text-for-list-react-component
+ * https://material-ui.com/
+ * https://code-boxx.com/url-parts-javascript/
+ */
+
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
