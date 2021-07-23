@@ -23,20 +23,16 @@ function fetchMessages(setMessages) {
       if (!res.ok) {
         throw res;
       }
-      console.log('test');
       return res.json();
     })
     .then((json) => {
-      console.log('test2');
       setMessages(json);
     })
     .catch((error) => {
-      console.log('test2e21');
       console.log(error);
       setMessages([]);
     });
 }
-
 
 /**
  *
@@ -79,8 +75,6 @@ function DMs() {
   React.useEffect(() => {
     fetchMessages(setMessages);
   }, []);
-
-  console.log(messages);
 
   return (
     <div>

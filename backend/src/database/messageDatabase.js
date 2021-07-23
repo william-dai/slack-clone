@@ -16,7 +16,6 @@ getDMMessages = async (id) => {
   };
   const {rows} = await pool.query(query);
   if (rows.length === 0) {
-    console.log('test');
     return undefined;
   }
   return rows.length !== 0 ? rows[0] : undefined;
