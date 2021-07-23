@@ -101,7 +101,7 @@ function fetchReplies(setReplies, id) {
  * @param {*} sent
  * @param {*} message
  */
-function addReply(sent, message) {
+function addReply(sent) {
   const item = localStorage.getItem('user');
   if (!item) {
     return;
@@ -174,15 +174,27 @@ function Replies() {
 
   const timeStamp = (time) => {
     const temp = new Date(time);
-    let hours = temp.getHours();
-    let minutes = temp.getMinutes();
-    if (hours < 10) {
-      hours = '0' + hours;
+    const currDay = new Date();
+    const temp2 = new Date(currDay.getFullYear(), currDay.getMonth(),
+      currDay.getDate(), currDay.getHours() + 7, currDay.getMinutes(),
+      currDay.getSeconds());
+
+    if (temp.getFullYear() === temp2.getFullYear() &&
+      temp.getMonth() === temp2.getMonth() &&
+      temp.getDate() === temp2.getDate()) {
+      let hours = temp.getHours();
+      let minutes = temp.getMinutes();
+      if (hours < 10) {
+        hours = '0' + hours;
+      }
+      if (minutes < 10) {
+        minutes = '0' + minutes;
+      }
+      return hours + ':' + minutes;
+    } else {
+      return temp.getMonth() + '/' + temp.getDate() +
+      '/' + temp.getFullYear();
     }
-    if (minutes < 10) {
-      minutes = '0' + minutes;
-    }
-    return hours + ':' + minutes;
   };
 
   const handleInputChange = (event) => {
@@ -206,13 +218,14 @@ function Replies() {
 
   React.useEffect(() => {
     fetchMessage(setChannel, data, true);
-  }, [data, true]);
+  }, [data]);
 
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
         <Toolbar>
-          {message.map((message) => (
+          {message.sort((a, b) => (
+            a.createdtime > b.createdtime) ? 1 : -1).map((message) => (
             <div>
               <IconButton edge="start"
                 className={classes.menuButton} color="inherit" aria-label="menu"
@@ -224,7 +237,7 @@ function Replies() {
           {/* {channels.workspaceid} */}
           {channel.map((channel) => (
             <Typography variant="h6" className={classes.title}>
-              {channel.name}</Typography>
+              Thread: {channel.name}</Typography>
           ))}
           {/* {workspace[work].name} */}
         </Toolbar>
