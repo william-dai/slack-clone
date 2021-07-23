@@ -167,16 +167,16 @@ function Messages() {
   let [send, setSend] = React.useState('');
   let [sent, setSent] = React.useState({});
 
-  const handleInputChange = (event) => {
+  const handleInputChange = async (event) => {
     setSend(send = event.target.value);
-    fetchMessages(setMessages, data);
+    await fetchMessages(setMessages, data);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setSent(sent = {message: send, channel: data, name: user.name});
     addMessage(sent, messages);
-    fetchMessages(setMessages, data);
+    await fetchMessages(setMessages, data);
   };
 
   const classes = useStyles();
@@ -206,12 +206,12 @@ function Messages() {
     }
   };
 
-  React.useEffect(() => {
-    fetchChannel(setChannel, data);
+  React.useEffect(async () => {
+    await fetchChannel(setChannel, data);
   }, [data]);
 
-  React.useEffect(() => {
-    fetchMessages(setMessages, data);
+  React.useEffect(async () => {
+    await fetchMessages(setMessages, data);
   }, [data]);
 
   return (

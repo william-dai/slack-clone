@@ -138,34 +138,42 @@ function Channels() {
     history.push('/messages/' + event.currentTarget.id);
   };
 
-  const handleWork = (event) => {
+  const handleWork = async (event) => {
     if (work === 0 && event.currentTarget.innerText === 'CSE130') {
-      changeHeader(headerName = 'CSE130');
-      changeWork(work = 1);
+      await changeHeader(headerName = 'CSE130');
+      await changeWork(work = 1);
     } else if (work === 1 && event.currentTarget.innerText === 'CSE183') {
-      changeHeader(headerName = 'CSE183');
-      changeWork(work = 0);
+      await changeHeader(headerName = 'CSE183');
+      await changeWork(work = 0);
     }
   };
 
   const classes = useStyles();
 
   React.useEffect(() => {
-    fetchWorkspace(setWorkspace);
+    const test = async () => {
+      fetchWorkspace(setWorkspace);
+    };
+    test().then(() => {
+      console.log();
+    });
   }, []);
 
-  React.useEffect(() => {
-    fetchChannels(setChannels);
+  React.useEffect(async () => {
+    await fetchChannels(setChannels);
   }, []);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenu = async (event) => {
+    await setAnchorEl(event.currentTarget);
   };
 
-  const closeMenu = (event) => {
-    handleWork(event);
-    setAnchorEl(null);
+  const closeMenu = async (event) => {
+    await handleWork(event);
+    await setAnchorEl(null);
   };
+
+  console.log(channels);
+  console.log(workspace);
 
   return (
     <div className={classes.root}>
@@ -207,8 +215,8 @@ function Channels() {
       <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
-          if (channel.category === 'Channels'/* &&
-          channel.workspaceid === workspace[work].id */) {
+          if (channel.category === 'Channels' &&
+          channel.workspaceid === workspace[work].id) {
             list = (
               <List component='nav'
                 aria-label='main mailbox folders' key={channel.name}>

@@ -20,7 +20,7 @@ INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 
 INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 'assignment-3', ARRAY ['Michael', 'Nathan'] FROM workspace WHERE name = 'CSE183';
 INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 'assignment-4', ARRAY ['Michael', 'Nathan'] FROM workspace WHERE name = 'CSE183';
 
--- INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 'General', ARRAY ['Michael', 'Nathan'] FROM workspace WHERE name = 'CSE130'; --
+INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 'General', ARRAY ['Michael', 'Nathan'] FROM workspace WHERE name = 'CSE130';
 
 INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'DM: Nathan', ARRAY ['Michael', 'Nathan']);
 INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'DM: James', ARRAY ['Michael', 'James']);

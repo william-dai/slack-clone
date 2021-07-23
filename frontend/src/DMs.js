@@ -122,8 +122,8 @@ function DMs() {
     }
   };
 
-  React.useEffect(() => {
-    fetchMessages(setMessages);
+  React.useEffect(async () => {
+    await fetchMessages(setMessages);
   }, []);
 
   return (
