@@ -31,7 +31,7 @@ Messages:
 
 Messages->Channels:
 - Button on the right takes user to the reply thread of the particular message
-Replies:
+- Replies:
 - Header will denote that the current page is a reply thread from the channel it originates from
 - Top message is the original post, will always be present
 - Replies are below the original post
