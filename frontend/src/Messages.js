@@ -214,8 +214,6 @@ function Messages() {
     fetchMessages(setMessages, data);
   }, [data]);
 
-  console.log();
-
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>

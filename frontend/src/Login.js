@@ -51,7 +51,7 @@ function Login() {
         <TextField
           id="standard-password-input"
           style={{margin: 0}}
-          label="Username"
+          label="Email"
           name="email"
           type="email"
           autoComplete="current-username"
