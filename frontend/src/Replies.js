@@ -198,28 +198,28 @@ function Replies() {
     }
   };
 
-  const handleInputChange = async (event) => {
-    await setSend(send = event.target.value);
-    await fetchMessage(setChannel, data, true);
+  const handleInputChange = (event) => {
+    setSend(send = event.target.value);
+    fetchMessage(setChannel, data, true);
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    await setSent(sent = {reply: send, message: data, name: user.name});
-    await addReply(sent, replies);
-    await fetchReplies(setReplies, data);
+    setSent(sent = {reply: send, message: data, name: user.name});
+    addReply(sent, replies);
+    fetchReplies(setReplies, data);
   };
 
-  React.useEffect(async () => {
-    await fetchReplies(setReplies, data);
+  React.useEffect(() => {
+    fetchReplies(setReplies, data);
   }, [data]);
 
-  React.useEffect(async () => {
-    await fetchMessage(setMessage, data);
+  React.useEffect(() => {
+    fetchMessage(setMessage, data);
   }, [data]);
 
-  React.useEffect(async () => {
-    await fetchMessage(setChannel, data, true);
+  React.useEffect(() => {
+    fetchMessage(setChannel, data, true);
   }, [data]);
 
   return (

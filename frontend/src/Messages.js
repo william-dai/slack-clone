@@ -167,16 +167,16 @@ function Messages() {
   let [send, setSend] = React.useState('');
   let [sent, setSent] = React.useState({});
 
-  const handleInputChange = async (event) => {
+  const handleInputChange = (event) => {
     setSend(send = event.target.value);
-    await fetchMessages(setMessages, data);
+    fetchMessages(setMessages, data);
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     setSent(sent = {message: send, channel: data, name: user.name});
     addMessage(sent, messages);
-    await fetchMessages(setMessages, data);
+    fetchMessages(setMessages, data);
   };
 
   const classes = useStyles();
@@ -206,12 +206,12 @@ function Messages() {
     }
   };
 
-  React.useEffect(async () => {
-    await fetchChannel(setChannel, data);
+  React.useEffect(() => {
+    fetchChannel(setChannel, data);
   }, [data]);
 
-  React.useEffect(async () => {
-    await fetchMessages(setMessages, data);
+  React.useEffect(() => {
+    fetchMessages(setMessages, data);
   }, [data]);
 
   return (
@@ -237,36 +237,8 @@ function Messages() {
         {messages.sort((a, b) => (
           a.createdtime > b.createdtime) ? 1 : -1).map((message, index) => {
           let list = '';
-          channel.map((channel) => (
-            <div></div>
-          ));
-          if (channel[0].name[0] + channel[0].name[1] !== 'DM') {
-            list = (<div key={index}>
-              <List component='nav'
-                aria-label='main mailbox folders' key={index}>
-                <ListItem className={classes.list}>
-                  <ListItemIcon>
-                    <AccountCircleIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary= {message.createdby}
-                    secondary={
-                      <div>
-                        <div>{timeStamp(message.createdtime)}</div>
-                        <div style={{color: 'black'}}>{message.content}</div>
-                      </div>
-                    }
-                    style={{height: 70}}/>
-                  <IconButton
-                    onClick={() => history.push('/replies/' + message.id)}>
-                    <ReplyIcon/>
-                  </IconButton>
-                </ListItem>
-                <Divider/>
-              </List>
-            </div>);
-          } else {
-            list = (<List component='nav'
+          list = (<div key={index}>
+            <List component='nav'
               aria-label='main mailbox folders' key={index}>
               <ListItem className={classes.list}>
                 <ListItemIcon>
@@ -281,10 +253,15 @@ function Messages() {
                     </div>
                   }
                   style={{height: 70}}/>
+                <IconButton
+                  onClick={() => history.push('/replies/' + message.id)}>
+                  <ReplyIcon/>
+                </IconButton>
               </ListItem>
               <Divider/>
-            </List>);
-          } return list;
+            </List>
+          </div>);
+          return list;
         })}
       </div>
       <form onSubmit={onSubmit}>
