@@ -21,6 +21,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import SendIcon from '@material-ui/icons/Send';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
 
 /**
  *
@@ -256,6 +257,9 @@ function Replies() {
                 <ListItemText style={{textAlign: 'right'}}
                   primary={timeStamp(message.createdtime)}/>
               </ListItem>
+              <Divider/>
+              <ListItemText primary="Replies"/>
+              <Divider/>
             </List>
           </div>
         ))}
@@ -272,6 +276,7 @@ function Replies() {
                 <ListItemText style={{textAlign: 'right'}}
                   primary={timeStamp(reply.createdtime)}/>
               </ListItem>
+              <Divider/>
             </List>
           </div>
         ))}

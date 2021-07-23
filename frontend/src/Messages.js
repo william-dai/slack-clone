@@ -22,6 +22,7 @@ import SendIcon from '@material-ui/icons/Send';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ReplyIcon from '@material-ui/icons/Reply';
+import Divider from '@material-ui/core/Divider';
 
 /**
  *
@@ -183,7 +184,6 @@ function Messages() {
 
   const timeStamp = (time) => {
     const temp = new Date(time);
-    console.log(time);
     const currDay = new Date();
     const temp2 = new Date(currDay.getFullYear(), currDay.getMonth(),
       currDay.getDate(), currDay.getHours() + 7, currDay.getMinutes(),
@@ -253,6 +253,7 @@ function Messages() {
                   <ReplyIcon/>
                 </IconButton>
               </ListItem>
+              <Divider/>
             </List>
           </div>
         ))}
