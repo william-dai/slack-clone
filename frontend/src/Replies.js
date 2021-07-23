@@ -252,13 +252,18 @@ function Replies() {
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary={message.createdby}
-                  secondary={message.content}/>
-                <ListItemText style={{textAlign: 'right'}}
-                  primary={timeStamp(message.createdtime)}/>
+                <ListItemText
+                  primary= {message.createdby}
+                  secondary={
+                    <div>
+                      <div>{timeStamp(message.createdtime)}</div>
+                      <div style={{color: 'black'}}>{message.content}</div>
+                    </div>
+                  }
+                  style={{height: 50}}/>
               </ListItem>
-              <Divider/>
-              <ListItemText primary="Replies"/>
+              {/* <Divider/> */}
+              <ListItemText style={{paddingLeft: 10}} primary="Replies"/>
               <Divider/>
             </List>
           </div>

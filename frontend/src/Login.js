@@ -62,7 +62,7 @@ function Login() {
           id="standard-password-input"
           label="Password"
           name="pass"
-          type="pass"
+          type="password"
           autoComplete="current-password"
           onChange={handleInputChange}
         />
