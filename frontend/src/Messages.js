@@ -183,15 +183,28 @@ function Messages() {
 
   const timeStamp = (time) => {
     const temp = new Date(time);
-    let hours = temp.getHours();
-    let minutes = temp.getMinutes();
-    if (hours < 10) {
-      hours = '0' + hours;
+    console.log(time);
+    const currDay = new Date();
+    const temp2 = new Date(currDay.getFullYear(), currDay.getMonth(),
+      currDay.getDate(), currDay.getHours() + 7, currDay.getMinutes(),
+      currDay.getSeconds());
+
+    if (temp.getFullYear() === temp2.getFullYear() &&
+      temp.getMonth() === temp2.getMonth() &&
+      temp.getDate() === temp2.getDate()) {
+      let hours = temp.getHours();
+      let minutes = temp.getMinutes();
+      if (hours < 10) {
+        hours = '0' + hours;
+      }
+      if (minutes < 10) {
+        minutes = '0' + minutes;
+      }
+      return hours + ':' + minutes;
+    } else {
+      return temp.getMonth() + '/' + temp.getDate() +
+      '/' + temp.getFullYear();
     }
-    if (minutes < 10) {
-      minutes = '0' + minutes;
-    }
-    return hours + ':' + minutes;
   };
 
   React.useEffect(() => {
@@ -222,7 +235,8 @@ function Messages() {
       </AppBar>
 
       <div style={{maxHeight: '70%', overflow: 'auto'}}>
-        {messages.map((message, index) => (
+        {messages.sort((a, b) => (
+          a.createdtime > b.createdtime) ? 1 : -1).map((message, index) => (
           <div>
             <List component='nav'
               aria-label='main mailbox folders' key={index}>
