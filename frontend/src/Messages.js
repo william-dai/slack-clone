@@ -169,6 +169,7 @@ function Messages() {
 
   const handleInputChange = (event) => {
     setSend(send = event.target.value);
+    fetchMessages(setMessages, data);
   };
 
   const onSubmit = (event) => {
