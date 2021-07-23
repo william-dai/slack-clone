@@ -5,6 +5,7 @@ import Login from './Login';
 import Channels from './Channels';
 import Messages from './Messages';
 import Replies from './Replies';
+import DMs from './DMs';
 
 /**
  * Simple component with no state.
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path="/replies">
           <Replies/>
+        </Route>
+        <Route path="/dms">
+          <DMs/>
         </Route>
       </Switch>
     </BrowserRouter>

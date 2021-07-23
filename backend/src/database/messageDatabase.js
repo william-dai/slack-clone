@@ -8,13 +8,42 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 
-exports.getMessages = async () => {
+getDMMessages = async (id) => {
+  let select = 'SELECT * FROM message WHERE channelid = $1';
+  let query = {
+    text: select,
+    values: [id],
+  };
+  const {rows} = await pool.query(query);
+  if (rows.length === 0) {
+    return undefined;
+  }
+  return rows.length !== 0 ? rows[0] : undefined;
+}
+
+exports.getMessages = async (dms) => {
   let select = 'SELECT * FROM message';
+  if (dms) {
+    select = `SELECT * FROM channel WHERE category = 'DMs'`;
+  }
   let query = {
     text: select,
     values: [],
   };
-  const {rows} = await pool.query(query);
+  let {rows} = await pool.query(query);
+  if (dms) {
+    let temp = [];
+    for (const i in rows) {
+      if (rows[i].id) {
+        const test = await getDMMessages(rows[i].id);
+        if (test === undefined) {
+          continue;
+        }
+        temp.push(await getDMMessages(rows[i].id));
+      }
+    }
+    rows = temp;
+  }
   return rows;
 };
 
@@ -40,7 +69,17 @@ getChannelwithReply = async (id) => {
   const {rows} = await pool.query(query);
   return rows.length !== 0 ? rows : undefined;
 };
-
+/*
+exports.getDMs = async () => {
+  let select = `SELECT * message WHERE category = 'DMs'`;
+  let query = {
+    text: select,
+    values: [],
+  };
+  let {rows} = await pool.query(query);
+  return rows.length !== 0 ? rows : undefined;
+};
+*/
 exports.getMessagesByChannel = async (givenChannelId, bool) => {
   let select = 'SELECT * FROM message WHERE channelid = $1';
   let query = {

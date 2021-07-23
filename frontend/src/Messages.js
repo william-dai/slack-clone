@@ -295,7 +295,8 @@ function Messages() {
           label="Home" value="home" icon={<HomeIcon />}
           onClick={() => history.push('/channels')}/>
         <BottomNavigationAction
-          label="Messages" value="messages" icon={<ForumIcon />} />
+          label="Messages" value="messages" icon={<ForumIcon />}
+          onClick={() => history.push('/dms')} />
         <BottomNavigationAction
           label="At" value="at" icon={<AlternateEmailIcon />} />
         <BottomNavigationAction

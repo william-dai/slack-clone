@@ -1,7 +1,7 @@
 const db = require('./database/messageDatabase.js');
 
 exports.getMessages = async(req, res) => {
-  const messages = await db.getMessages();
+  const messages = await db.getMessages(req.query.dms);
   if (messages.length !== 0) {
     res.status(200).json(messages);
   } else {
