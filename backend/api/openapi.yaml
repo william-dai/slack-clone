@@ -159,6 +159,12 @@ paths:
   /message:
     get:
       description: Getting Message/s
+      parameters:
+      - name: dms
+        in: query
+        description: Get dms
+        schema:
+          type: string
       responses:
         200:
           description: Received Message/s

@@ -263,7 +263,8 @@ function Replies() {
             </List>
           </div>
         ))}
-        {replies.map((reply, index) => (
+        {replies.sort((a, b) => (
+          a.createdtime > b.createdtime) ? 1 : -1).map((reply, index) => (
           <div>
             <List component='nav'
               aria-label='main mailbox folders' key={index}>
@@ -300,7 +301,8 @@ function Replies() {
           label="Home" value="home" icon={<HomeIcon />}
           onClick={() => history.push('/channels')}/>
         <BottomNavigationAction
-          label="Messages" value="messages" icon={<ForumIcon />} />
+          label="Messages" value="messages" icon={<ForumIcon />}
+          onClick={() => history.push('/dms')} />
         <BottomNavigationAction
           label="At" value="at" icon={<AlternateEmailIcon />} />
         <BottomNavigationAction
