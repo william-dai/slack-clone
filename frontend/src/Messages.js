@@ -237,6 +237,9 @@ function Messages() {
         {messages.sort((a, b) => (
           a.createdtime > b.createdtime) ? 1 : -1).map((message, index) => {
           let list = '';
+          channel.map((channel) => (
+            <div></div>
+          ));
           if (channel[0].name[0] + channel[0].name[1] !== 'DM') {
             list = (<div key={index}>
               <List component='nav'
