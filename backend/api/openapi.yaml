@@ -210,6 +210,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: bool
+        in: query
+        description: find channel
+        schema:
+          type: string
       responses:
         200:
           description: Received Message/s

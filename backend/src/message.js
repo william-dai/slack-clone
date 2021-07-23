@@ -11,7 +11,7 @@ exports.getMessages = async(req, res) => {
 
 exports.getMessagesByChannel = async(req, res) => {
   if (req.params.id) {
-    const messages = await db.getMessagesByChannel(req.params.id);
+    const messages = await db.getMessagesByChannel(req.params.id, req.query.bool);
     if (messages) {
       res.status(200).json(messages);
     }
@@ -49,7 +49,6 @@ exports.createReply = async(req, res) => {
 };
 
 exports.getRepliesById = async(req, res) => {
-  console.log('test');
   if (req.params.id) {
     const replies = await db.getRepliesById(req.params.id);
     if (replies) {

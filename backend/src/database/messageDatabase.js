@@ -18,17 +18,30 @@ exports.getMessages = async () => {
   return rows;
 };
 
-getMessageById = async(givenId) => {
+getMessageById = async (givenId, bool) => {
   let select = 'SELECT * FROM message WHERE id = $1';
   let query = {
     text: select,
     values: [givenId],
   };
-  const {rows} = await pool.query(query);
+  let {rows} = await pool.query(query);
+  if (bool) {
+    rows = await getChannelwithReply(rows[0].channelid);
+  }
   return rows.length !== 0 ? rows : undefined;
 }
 
-exports.getMessagesByChannel = async (givenChannelId) => {
+getChannelwithReply = async (id) => {
+  let select = 'SELECT * FROM channel WHERE id = $1';
+  let query = {
+    text: select,
+    values: [id],
+  };
+  const {rows} = await pool.query(query);
+  return rows.length !== 0 ? rows : undefined;
+};
+
+exports.getMessagesByChannel = async (givenChannelId, bool) => {
   let select = 'SELECT * FROM message WHERE channelid = $1';
   let query = {
     text: select,
@@ -36,7 +49,7 @@ exports.getMessagesByChannel = async (givenChannelId) => {
   };
   let {rows} = await pool.query(query);
   if (rows.length === 0) {
-    rows = getMessageById(givenChannelId);
+    rows = await getMessageById(givenChannelId, bool);
   }
   return rows.length !== 0 ? rows : undefined;
 };
@@ -77,7 +90,6 @@ exports.getRepliesById = async (givenMessageId) => {
     text: select,
     values: [givenMessageId],
   };
-  const {rows} = await pool.query(query);
-  console.log(rows);
+  let {rows} = await pool.query(query);
   return rows.length !== 0 ? rows : undefined;
 };

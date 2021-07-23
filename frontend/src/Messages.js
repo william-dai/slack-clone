@@ -119,9 +119,6 @@ function addMessage(sent, message) {
       }
       return res.json();
     })
-    .then(() => {
-      message(sent);
-    })
     .catch((error) => {
       console.log(error);
     });
@@ -200,8 +197,6 @@ function Messages() {
   React.useEffect(() => {
     fetchChannel(setChannel, data);
   }, [data]);
-
-  console.log(channel);
 
   React.useEffect(() => {
     fetchMessages(setMessages, data);

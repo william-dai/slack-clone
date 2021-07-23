@@ -26,15 +26,20 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
  *
  * @param {*} setMessage
  * @param {*} id
+ * @param {*} bool
  */
-function fetchMessage(setMessage, id) {
+function fetchMessage(setMessage, id, bool) {
   const item = localStorage.getItem('user');
   if (!item) {
     return;
   }
+  let temp = id;
+  if (bool) {
+    temp += '?bool=bool';
+  }
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
-  fetch('/v0/message/' + id, {
+  fetch('/v0/message/' + temp, {
     method: 'GET',
     headers: new Headers({
       'Authorization': `Bearer ${bearerToken}`,
@@ -48,7 +53,6 @@ function fetchMessage(setMessage, id) {
       return res.json();
     })
     .then((json) => {
-      // setError('');
       setMessage(json);
     })
     .catch((error) => {
@@ -67,6 +71,7 @@ function fetchReplies(setReplies, id) {
   if (!item) {
     return;
   }
+
   const user = JSON.parse(item);
   const bearerToken = user ? user.accessToken : '';
   fetch('/v0/reply/' + id, {
@@ -83,7 +88,6 @@ function fetchReplies(setReplies, id) {
       return res.json();
     })
     .then((json) => {
-      // setError('');
       setReplies(json);
     })
     .catch((error) => {
@@ -117,9 +121,6 @@ function addReply(sent, message) {
         throw res;
       }
       return res.json();
-    })
-    .then(() => {
-      message(sent);
     })
     .catch((error) => {
       console.log(error);
@@ -165,6 +166,7 @@ function Replies() {
   data = data.substring(data.lastIndexOf('/') + 1);
   const [replies, setReplies] = React.useState([]);
   const [message, setMessage] = React.useState([]);
+  const [channel, setChannel] = React.useState([]);
   let [send, setSend] = React.useState('');
   let [sent, setSent] = React.useState({});
   const user = JSON.parse(item);
@@ -202,6 +204,10 @@ function Replies() {
     fetchMessage(setMessage, data);
   }, [data]);
 
+  React.useEffect(() => {
+    fetchMessage(setChannel, data, true);
+  }, [data, true]);
+
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
@@ -215,11 +221,12 @@ function Replies() {
               </IconButton>
             </div>
           ))}
-          <Typography variant="h6" className={classes.title}>
-            {/* {channels.workspaceid} */}
-            General
-            {/* {workspace[work].name} */}
-          </Typography>
+          {/* {channels.workspaceid} */}
+          {channel.map((channel) => (
+            <Typography variant="h6" className={classes.title}>
+              {channel.name}</Typography>
+          ))}
+          {/* {workspace[work].name} */}
         </Toolbar>
       </AppBar>
       <div style={{maxHeight: '70%', overflow: 'auto'}}>

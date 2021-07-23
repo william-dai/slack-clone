@@ -1,5 +1,5 @@
 import {BottomNavigation} from '@material-ui/core';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -123,18 +123,14 @@ const useStyles = makeStyles((theme) => ({
 function Channels() {
   const [channels, setChannels] = React.useState([]);
   const [workspace, setWorkspace] = React.useState([]);
-  // const [name, setName] = React.useState(user ? user.name : '');
-  // const [error, setError] = React.useState('Logged out');
   let [work, changeWork] = React.useState(0);
   const history = useHistory();
-  // let num = 0;
   const item = localStorage.getItem('user');
   if (!item) {
     history.push('/');
   }
 
   const handleChange = (event) => {
-    console.log(event.currentTarget);
     history.push('/messages/' + event.currentTarget.id);
   };
 
@@ -144,19 +140,16 @@ function Channels() {
 
   const classes = useStyles();
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchWorkspace(setWorkspace);
   }, []);
 
   React.useEffect(() => {
-    fetchChannels(setChannels /* , setError */);
+    fetchChannels(setChannels);
   }, []);
 
   return (
     <div className={classes.root}>
-      {workspace.map(() => (
-        <div></div>
-      ))}
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
         <Toolbar>
           <IconButton edge="start"
@@ -179,9 +172,6 @@ function Channels() {
       <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
-          // console.log('Channel: ' +
-          //   channel.category + ' ' + channel.workspaceid);
-          // console.log('Workspace: ' + workspace);
           if (channel.category === 'Channels' &&
           channel.workspaceid === workspace[work].id) {
             list = (

@@ -16,12 +16,10 @@ function Login() {
     const currUser = user;
     currUser[name] = value;
     setUser(currUser);
-    console.log(user);
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(JSON.stringify(user));
     fetch('/v0/authenticate', {
       method: 'POST',
       body: JSON.stringify(user),
