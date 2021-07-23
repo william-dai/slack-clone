@@ -17,6 +17,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 /**
  *
@@ -124,6 +126,8 @@ function Channels() {
   const [channels, setChannels] = React.useState([]);
   const [workspace, setWorkspace] = React.useState([]);
   let [work, changeWork] = React.useState(0);
+  let [headerName, changeHeader] = React.useState('CSE183');
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory();
   const item = localStorage.getItem('user');
   if (!item) {
@@ -134,8 +138,14 @@ function Channels() {
     history.push('/messages/' + event.currentTarget.id);
   };
 
-  const handleWork = () => {
-    changeWork(work === 0 ? work = 1 : work = 0);
+  const handleWork = (event) => {
+    if (work === 0 && event.currentTarget.innerText === 'CSE130') {
+      changeHeader(headerName = 'CSE130');
+      changeWork(work = 1);
+    } else if (work === 1 && event.currentTarget.innerText === 'CSE183') {
+      changeHeader(headerName = 'CSE183');
+      changeWork(work = 0);
+    }
   };
 
   const classes = useStyles();
@@ -148,19 +158,44 @@ function Channels() {
     fetchChannels(setChannels);
   }, []);
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeMenu = (event) => {
+    handleWork(event);
+    setAnchorEl(null);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
         <Toolbar>
           <IconButton edge="start"
             className={classes.menuButton} color="inherit" aria-label="menu"
-            onClick={handleWork}>
+            onClick={handleMenu}>
             <ArrowDropDownCircleIcon />
           </IconButton>
+          {workspace.map((workButton) => {
+            const menu = (
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={closeMenu}
+                key={workButton.name}
+              >
+                <MenuItem onClick={(event) => closeMenu(event)}
+                  key='183'>CSE183</MenuItem>
+                <MenuItem onClick={(event) => closeMenu(event)}
+                  key='130'>CSE130</MenuItem>
+              </Menu>
+            );
+            return menu;
+          })}
           <Typography variant="h6" className={classes.title}>
-            {/* {channels.workspaceid} */}
-            CSE183
-            {/* {workspace[work].name} */}
+            {headerName}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -179,7 +214,7 @@ function Channels() {
                 aria-label='main mailbox folders' key={channel.name}>
                 <ListItem
                   button id={channel.id} className={classes.list}
-                  onClick={handleChange}>
+                  onClick={handleChange} key={channel.name}>
                   <ListItemIcon
                     style={{width: '20px', minWidth: 0, fontSize: '14pt'}}>
                       #
