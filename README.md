@@ -23,8 +23,7 @@ Channels:
 Messages:
 - Message will display the username, date and time (time if current day, otherwise will display the date posted), and content
 - Typing and submiting a message will send the message into the database and display it on the screen
-    - Sometimes takes awhile to load message when submitting a new message, based on server or something, although it shouldn't need a refresh,
-      takes long time if first message, so if it won't load i guess refresh. everything after first message should be fine though
+    - Sometimes takes awhile to load new messages when submitting a new message, presumably dependent on server speed. Although it shouldn't need a refresh, note that first messages in a thread will take awhile to load automatically, so if it won't load, refreshing would probably be quicker.Everything after first message should be displayed quickly though.
 - Header will be of the current channel or DM
 - Once message list becomes larger than the screen, scroll to see new messages
 - Back button returns back to the channels page
