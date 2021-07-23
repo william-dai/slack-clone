@@ -22,16 +22,16 @@ INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 
 
 INSERT INTO channel (workspaceid, category, name, users) SELECT id, 'Channels', 'General', ARRAY ['Michael', 'Nathan'] FROM workspace WHERE name = 'CSE130';
 
-INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'Nathan', ARRAY ['Michael', 'Nathan']);
-INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'William', ARRAY ['Michael', 'William']);
-INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'James', ARRAY ['Michael', 'James']);
-INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'Bella', ARRAY ['Michael', 'Bella']);
+INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'DM: Nathan', ARRAY ['Michael', 'Nathan']);
+INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'DM: James', ARRAY ['Michael', 'James']);
+INSERT INTO channel (workspaceid, category, name, users) VALUES (gen_random_uuid(), 'DMs', 'DM: Bella', ARRAY ['Michael', 'Bella']);
 
 -- Creating Starting Messages --
 INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'Bella', current_timestamp, 'Testing, One, Two, Three.', 'Laugh' FROM channel WHERE name = 'General';
 INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'William', '2021-07-22 11:11:11.111', 'Test string.', 'Laugh' FROM channel WHERE name = 'General';
-INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'William', '2021-07-20 11:11:11.111', 'Test string 2.', 'Laugh' FROM channel WHERE name = 'General';
-
+INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'Michael', '2021-07-20 11:11:11.111', 'Test string 2.', 'Laugh' FROM channel WHERE name = 'General';
+INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'Nathan', '2021-07-20 11:11:11.111', 'DM test string.', 'Laugh' FROM channel WHERE name = 'DM: Nathan';
+INSERT INTO message (channelid, createdby, createdtime, content, reactions) SELECT id, 'Bella', '2021-07-20 11:11:11.111', 'DM test string 2.', 'Laugh' FROM channel WHERE name = 'DM: Bella';
 
 -- Creating Starting Replies --
 INSERT INTO reply (messageid, createdby, createdtime, content, reactions) SELECT id, 'Michael', current_timestamp, 'This is a reply.', 'Laugh' FROM message WHERE createdby = 'Bella';
