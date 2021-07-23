@@ -201,8 +201,6 @@ function Messages() {
     fetchChannel(setChannel, data);
   }, [data]);
 
-  console.log(channel);
-
   React.useEffect(() => {
     fetchMessages(setMessages, data);
   }, [data]);
