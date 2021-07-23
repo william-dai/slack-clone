@@ -50,7 +50,6 @@ function fetchMessages(setMessages, id) {
       return res.json();
     })
     .then((json) => {
-      // setError('');
       setMessages(json);
     })
     .catch((error) => {
@@ -85,7 +84,6 @@ function fetchChannel(setChannel, id) {
       return res.json();
     })
     .then((json) => {
-      // setError('');
       setChannel(json);
     })
     .catch((error) => {
@@ -215,6 +213,8 @@ function Messages() {
     fetchMessages(setMessages, data);
   }, [data]);
 
+  console.log();
+
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{backgroundColor: '#39123e'}}>
@@ -236,9 +236,30 @@ function Messages() {
 
       <div style={{maxHeight: '70%', overflow: 'auto'}}>
         {messages.sort((a, b) => (
-          a.createdtime > b.createdtime) ? 1 : -1).map((message, index) => (
-          <div>
-            <List component='nav'
+          a.createdtime > b.createdtime) ? 1 : -1).map((message, index) => {
+          let list = '';
+          if (channel[0].name[0] + channel[0].name[1] !== 'DM') {
+            list = (<div>
+              <List component='nav'
+                aria-label='main mailbox folders' key={index}>
+                <ListItem className={classes.list}>
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={message.createdby}
+                    secondary={message.content}/>
+                  <ListItemText style={{textAlign: 'right'}}
+                    primary={timeStamp(message.createdtime)}/>
+                  <IconButton
+                    onClick={() => history.push('/replies/' + message.id)}>
+                    <ReplyIcon/>
+                  </IconButton>
+                </ListItem>
+                <Divider/>
+              </List>
+            </div>);
+          } else {
+            list = (<List component='nav'
               aria-label='main mailbox folders' key={index}>
               <ListItem className={classes.list}>
                 <ListItemIcon>
@@ -248,15 +269,11 @@ function Messages() {
                   secondary={message.content}/>
                 <ListItemText style={{textAlign: 'right'}}
                   primary={timeStamp(message.createdtime)}/>
-                <IconButton
-                  onClick={() => history.push('/replies/' + message.id)}>
-                  <ReplyIcon/>
-                </IconButton>
               </ListItem>
               <Divider/>
-            </List>
-          </div>
-        ))}
+            </List>);
+          } return list;
+        })}
       </div>
       <form onSubmit={onSubmit}>
         <TextField id="outlined-basic" variant="outlined"
