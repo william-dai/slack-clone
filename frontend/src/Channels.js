@@ -242,21 +242,17 @@ function Channels() {
       <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
-          let name = channel.name;
-          if (channel.name[0] + channel.name[1] + channel.name[2] === 'DM:') {
-            name = name.replace('DM: ', '');
-          }
           if (channel.category === 'DMs') {
             list = (
               <List component='nav'
-                aria-label='main mailbox folders' key={name}>
+                aria-label='main mailbox folders' key={channel.name}>
                 <ListItem button id={channel.id} className={classes.list}
                   onClick={handleChange}>
                   <ListItemIcon
                     style={{width: '20px', minWidth: 0, fontSize: '14pt'}}>
                       #
                   </ListItemIcon>
-                  <ListItemText primary={name}/>
+                  <ListItemText primary={channel.name}/>
                 </ListItem>
               </List>
             );

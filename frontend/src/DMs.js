@@ -23,6 +23,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 // import ReplyIcon from '@material-ui/icons/Reply';
 // import Divider from '@material-ui/core/Divider';
+import Divider from '@material-ui/core/Divider';
 
 /**
  *
@@ -149,10 +150,16 @@ function DMs() {
                 <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText
-                primary={message.createdby+' : '+timeStamp(message.createdtime)}
-                secondary={message.content}
-              />
+                primary= {message.createdby}
+                secondary={
+                  <div>
+                    <div>{timeStamp(message.createdtime)}</div>
+                    <div style={{color: 'black'}}>{message.content}</div>
+                  </div>
+                }
+                style={{height: 70}}/>
             </ListItem>
+            <Divider/>
           </List>
         </div>
       ))}
