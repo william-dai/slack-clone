@@ -207,8 +207,8 @@ function Channels() {
       <div id='channels' style={{paddingLeft: 10}}>
         {channels.map((channel) => {
           let list = '';
-          if (channel.category === 'Channels' &&
-          channel.workspaceid === workspace[work].id) {
+          if (channel.category === 'Channels'/* &&
+          channel.workspaceid === workspace[work].id */) {
             list = (
               <List component='nav'
                 aria-label='main mailbox folders' key={channel.name}>

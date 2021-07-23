@@ -200,6 +200,7 @@ function Replies() {
 
   const handleInputChange = (event) => {
     setSend(send = event.target.value);
+    fetchMessage(setChannel, data, true);
   };
 
   const onSubmit = (event) => {
