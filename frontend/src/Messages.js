@@ -239,17 +239,22 @@ function Messages() {
           a.createdtime > b.createdtime) ? 1 : -1).map((message, index) => {
           let list = '';
           if (channel[0].name[0] + channel[0].name[1] !== 'DM') {
-            list = (<div>
+            list = (<div key={index}>
               <List component='nav'
                 aria-label='main mailbox folders' key={index}>
                 <ListItem className={classes.list}>
                   <ListItemIcon>
                     <AccountCircleIcon />
                   </ListItemIcon>
-                  <ListItemText primary={message.createdby}
-                    secondary={message.content}/>
-                  <ListItemText style={{textAlign: 'right'}}
-                    primary={timeStamp(message.createdtime)}/>
+                  <ListItemText
+                    primary= {message.createdby}
+                    secondary={
+                      <div>
+                        <div>{timeStamp(message.createdtime)}</div>
+                        <div style={{color: 'black'}}>{message.content}</div>
+                      </div>
+                    }
+                    style={{height: 70}}/>
                   <IconButton
                     onClick={() => history.push('/replies/' + message.id)}>
                     <ReplyIcon/>
@@ -265,10 +270,15 @@ function Messages() {
                 <ListItemIcon>
                   <AccountCircleIcon />
                 </ListItemIcon>
-                <ListItemText primary={message.createdby}
-                  secondary={message.content}/>
-                <ListItemText style={{textAlign: 'right'}}
-                  primary={timeStamp(message.createdtime)}/>
+                <ListItemText
+                  primary= {message.createdby}
+                  secondary={
+                    <div>
+                      <div>{timeStamp(message.createdtime)}</div>
+                      <div style={{color: 'black'}}>{message.content}</div>
+                    </div>
+                  }
+                  style={{height: 70}}/>
               </ListItem>
               <Divider/>
             </List>);
