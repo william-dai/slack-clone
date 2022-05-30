@@ -1,16 +1,14 @@
-# asg8
+# Slack Clone
 
 A Slack Clone, Kinda.
 
 Functionality Notes:
 
-- Only implemented mobile approach
-- Email only accepts email format 'email@example'
+- Email accepts email format 'email@example'
 - Password is encrypted within the backend
 - Authentication adds a session key inside of the browser to identify the user
   - If the session key does not exist, any paths will just redirect back to the login
 - Will populate channels and DMs on the home page
-- All users will current see the same channels due to incomplete implementation of permissions
 
 Toolbar:
 - Home button and DMs button only functional buttons, present throughout the web app
@@ -28,7 +26,6 @@ Messages:
 - Once message list becomes larger than the screen, scroll to see new messages
 - Back button returns back to the channels page
 
-
 Messages->Channels:
 - Button on the right takes user to the reply thread of the particular message
 - Replies:
@@ -37,9 +34,6 @@ Messages->Channels:
 - Replies are below the original post
 - Like with messages, users can add a message to reply to the thread.
 - Back button returns back to the original channel
-
-Messages->DMs:
-- Not completely implemented, everyone can see these like channels
 
 DMs Page:
 - Displays all DMs received by the user
